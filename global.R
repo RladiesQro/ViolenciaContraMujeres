@@ -8,7 +8,7 @@ library(shiny)
 library(shinydashboard)
 library(shinyWidgets)
 library(stringr)
-source("ViolenciaIntraFamilairMX.R")
+source("ViolenciaIntraFamiliarMX.R")
 
 
 datos_violencia <- readRDS("datos_violenciamx.rds")
