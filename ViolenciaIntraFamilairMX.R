@@ -83,6 +83,7 @@ CasosNormalizadosRepublica <- function(datos_violencia, poblacion_inegi_2015, fi
 }
 
 TasaPromedioMensual <- function(datos_violencia, poblacion_inegi_2015, filtro.tipo = NULL) {
+  meses_sin_datos <- DefinirMesesSinDatos(datos_violencia)
   if(!is.null(filtro.tipo)) {
     violencia_normalizada <- datos_violencia %>%
       filter(Tipo == filtro.tipo)
@@ -90,6 +91,7 @@ TasaPromedioMensual <- function(datos_violencia, poblacion_inegi_2015, filtro.ti
     violencia_normalizada <- datos_violencia
   }
   violencia_normalizada %>%
+    filter(!floor_date(fecha, unit = "month") %in% meses_sin_datos) %>%
     group_by(Entidad, anyo = year(fecha), mes = month(fecha)) %>%
     summarise(casos_estado_mes = sum(ocurrencia)) %>%
     ungroup() %>%
@@ -107,16 +109,19 @@ ComparaMesesConDatos <- function(datos_violencia, filtro.tipo = NULL) {
   } else {
     violencia_normalizada <- datos_violencia
   }
-  meses_sin_datos <- datos_violencia %>%
-    group_by(fecha = floor_date(fecha, unit = "month")) %>%
-    summarise(frecuencia_casos = sum(ocurrencia)) %>%
-    filter(frecuencia_casos == 0) %>%
-    pull(fecha)
-
+  meses_sin_datos <- DefinirMesesSinDatos(datos_violencia)
   violencia_normalizada %>%
     group_by(Entidad, fecha = floor_date(fecha, unit = "month")) %>%
     summarise(casos_por_mes = sum(ocurrencia)) %>%
     ungroup() %>%
     filter(!month(fecha) %in% month(meses_sin_datos)) %>%
     AgregaTasaPoblacional(., poblacion_inegi_2015, columna_a_tasa = "casos_por_mes")
+}
+
+DefinirMesesSinDatos <- function(datos_violencia) {
+  datos_violencia %>%
+    group_by(fecha = floor_date(fecha, unit = "month")) %>%
+    summarise(frecuencia_casos = sum(ocurrencia)) %>%
+    filter(frecuencia_casos == 0) %>%
+    pull(fecha)
 }
