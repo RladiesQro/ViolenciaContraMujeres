@@ -81,7 +81,7 @@ shinyServer(function(input, output) {
             geom_line(aes(x = anyo, y = tasa_100k, color = Entidad)) +
             geom_point(aes(x = anyo, y = tasa_100k, color = Entidad, text = labels)) +
             scale_color_viridis_d() +
-            labs(x = "", y = "Casos por cada 100 mil habitantes") +
+            labs(x = "", y = "Casos por cada 100 mil habitantes", color = "") +
             theme_minimal()
         ggplotly(plot_violencia_estados, tooltip = c("text")) %>%
             config(
@@ -106,7 +106,7 @@ shinyServer(function(input, output) {
             geom_line(aes(x = anyo, y = tasa_100k, color = Entidad)) +
             geom_point(aes(x = anyo, y = tasa_100k, color = Entidad, text = labels)) +
             scale_color_viridis_d() +
-            labs(x = "", y = "Casos por cada 100 mil habitantes") +
+            labs(x = "", y = "Casos por cada 100 mil habitantes", color = "") +
             theme_minimal()
         ggplotly(plot_violencia_familiar, tooltip = c("text")) %>%
             config(
@@ -136,7 +136,15 @@ shinyServer(function(input, output) {
                 "Casos por cada 100 mil habitantes: {comma(tasa_100k, accuracy = 1)}<br>",
                 "Población Estado (Inegi-2015): {comma(poblacion_total, accuracy = 1)}"
             )) %>%
-            mutate(anyo = factor(year(fecha)), mes = str_to_title(month(fecha, label = T)))
+            mutate(
+                anyo = factor(year(fecha)),
+                mes = factor(
+                    x = str_to_title(month(fecha, label = T)),
+                    levels = str_to_title(month(sort(fecha), label = T)),
+                    labels = str_to_title(month(sort(fecha), label = T)),
+                    ordered = TRUE
+                )
+            )
 
         plot_violencia_mes_datos <- ggplot(violencia_meses_con_datos, aes(x = mes, y = tasa_100k, fill = anyo, text = labels)) +
             geom_col(position = "dodge") +

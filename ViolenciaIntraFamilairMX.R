@@ -115,7 +115,8 @@ ComparaMesesConDatos <- function(datos_violencia, filtro.tipo = NULL) {
     summarise(casos_por_mes = sum(ocurrencia)) %>%
     ungroup() %>%
     filter(!month(fecha) %in% month(meses_sin_datos)) %>%
-    AgregaTasaPoblacional(., poblacion_inegi_2015, columna_a_tasa = "casos_por_mes")
+    AgregaTasaPoblacional(., poblacion_inegi_2015, columna_a_tasa = "casos_por_mes") %>%
+    arrange(fecha)
 }
 
 DefinirMesesSinDatos <- function(datos_violencia) {
