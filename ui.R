@@ -31,7 +31,7 @@ dashboardPage(
                     box(
                         pickerInput(
                             inputId = "estado",
-                            label = "NULL",
+                            label = NULL,
                             choices = vector_estados,
                             options = list(
                                 `actions-box` = TRUE,
