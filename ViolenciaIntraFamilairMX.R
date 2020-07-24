@@ -100,14 +100,20 @@ TasaPromedioMensual <- function(datos_violencia, poblacion_inegi_2015, filtro.ti
     AgregaTasaPoblacional(., poblacion_inegi_2015, columna_a_tasa = "casos_promedio_mes")
 }
 
-ComparaMesesConDatos <- function(datos_violencia) {
+ComparaMesesConDatos <- function(datos_violencia, filtro.tipo = NULL) {
+  if(!is.null(filtro.tipo)) {
+    violencia_normalizada <- datos_violencia %>%
+      filter(Tipo == filtro.tipo)
+  } else {
+    violencia_normalizada <- datos_violencia
+  }
   meses_sin_datos <- datos_violencia %>%
     group_by(fecha = floor_date(fecha, unit = "month")) %>%
     summarise(frecuencia_casos = sum(ocurrencia)) %>%
     filter(frecuencia_casos == 0) %>%
     pull(fecha)
 
-  datos_violencia %>%
+  violencia_normalizada %>%
     group_by(Entidad, fecha = floor_date(fecha, unit = "month")) %>%
     summarise(casos_por_mes = sum(ocurrencia)) %>%
     ungroup() %>%

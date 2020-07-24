@@ -53,6 +53,30 @@ dashboardPage(
                         title = HTML("Violencia <b>IntraFamiliar</b> en estados"),
                         width = 6
                     )
+                ),
+                fluidRow(
+                    box(
+                        fluidRow(
+                            column(
+                                width = 12,
+                                selectInput(
+                                    inputId = "estado_unico",
+                                    label = NULL,
+                                    choices = c("Todos", vector_estados),
+                                    multiple = FALSE,
+                                    selected = "Querétaro"
+                                )
+                            )
+                        ),
+                        fluidRow(
+                            column(
+                                width = 12,
+                                plotlyOutput("violencia_familiar_mes_valido")
+                            )
+                        ),
+                        title = HTML("Violencia <b>IntraFamiliar</b> para los meses con datos"),
+                        width = 12
+                    )
                 )
             )
         )
