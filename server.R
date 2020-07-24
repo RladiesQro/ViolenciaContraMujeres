@@ -1,49 +1,4 @@
 shinyServer(function(input, output) {
-    output$violencia_estatal <- renderPlotly({
-        violencia_anual_estados <- violencia_anual %>%
-            filter(Entidad %in% input$estado) %>%
-            mutate(labels = glue(
-                "Estado: {Entidad} <br>",
-                "Casos promedios al mes: {comma(casos_promedio_mes, accuracy = 1)}<br>",
-                "Casos por cada 100 mil habitantes {comma(tasa_100k, accuracy = 1)}<br>",
-                "Población Estado (Inegi-2015): {comma(poblacion_total, accuracy = 1)}"
-            ))
-        plot_violencia_estados <- ggplot(violencia_anual_estados) +
-            geom_line(aes(x = anyo, y = tasa_100k, color = Entidad)) +
-            geom_point(aes(x = anyo, y = tasa_100k, color = Entidad, text = labels)) +
-            theme_minimal()
-        ggplotly(plot_violencia_estados, tooltip = c("text")) %>%
-            config(
-                displaylogo = FALSE,
-                modeBarButtonsToRemove = list(
-                    "lasso2d", "toImage", "toggleSpikelines", "hoverClosestCartesian", "hoverCompareCartesian",
-                    "select2d", "zoomIn2d", "zoomOut2d", "pan2d", "autoScale2d", "resetScale2d", "zoom2d"
-                )
-            )
-    })
-
-    output$violencia_estatal_familiar <- renderPlotly({
-        violencia_familiar_anual_estados <- violencia_familiar_anual %>%
-            filter(Entidad %in% input$estado) %>%
-            mutate(labels = glue(
-                "Estado: {Entidad} <br>",
-                "Casos promedios al mes: {comma(casos_promedio_mes, accuracy = 1)}<br>",
-                "Casos por cada 100 mil habitantes {comma(tasa_100k, accuracy = 1)}<br>",
-                "Población Estado (Inegi-2015): {comma(poblacion_total, accuracy = 1)}"
-            ))
-        plot_violencia_familiar <- ggplot(violencia_familiar_anual_estados) +
-            geom_line(aes(x = anyo, y = tasa_100k, color = Entidad)) +
-            geom_point(aes(x = anyo, y = tasa_100k, color = Entidad, text = labels)) +
-            theme_minimal()
-        ggplotly(plot_violencia_familiar, tooltip = c("text")) %>%
-            config(
-                displaylogo = FALSE,
-                modeBarButtonsToRemove = list(
-                    "lasso2d", "toImage", "toggleSpikelines", "hoverClosestCartesian", "hoverCompareCartesian",
-                    "select2d", "zoomIn2d", "zoomOut2d", "pan2d", "autoScale2d", "resetScale2d", "zoom2d"
-                )
-            )
-    })
 
     output$mapa_violencia <- renderLeaflet({
         datos_mapa_violencia <- CasosNormalizadosRepublica(datos_violencia, poblacion_inegi_2015) %>%
@@ -110,6 +65,93 @@ shinyServer(function(input, output) {
                     style = list("font-weight" = "normal", padding = "3px 8px"),
                     textsize = "15px",
                     direction = "auto")
+            )
+    })
+
+    output$violencia_estatal <- renderPlotly({
+        violencia_anual_estados <- violencia_anual %>%
+            filter(Entidad %in% input$estado) %>%
+            mutate(labels = glue(
+                "Estado: {Entidad} <br>",
+                "Casos promedios al mes: {comma(casos_promedio_mes, accuracy = 1)}<br>",
+                "Casos por cada 100 mil habitantes {comma(tasa_100k, accuracy = 1)}<br>",
+                "Población Estado (Inegi-2015): {comma(poblacion_total, accuracy = 1)}"
+            ))
+        plot_violencia_estados <- ggplot(violencia_anual_estados) +
+            geom_line(aes(x = anyo, y = tasa_100k, color = Entidad)) +
+            geom_point(aes(x = anyo, y = tasa_100k, color = Entidad, text = labels)) +
+            scale_color_viridis_d() +
+            labs(x = "", y = "Casos por cada 100 mil habitantes") +
+            theme_minimal()
+        ggplotly(plot_violencia_estados, tooltip = c("text")) %>%
+            config(
+                displaylogo = FALSE,
+                modeBarButtonsToRemove = list(
+                    "lasso2d", "toImage", "toggleSpikelines", "hoverClosestCartesian", "hoverCompareCartesian",
+                    "select2d", "zoomIn2d", "zoomOut2d", "pan2d", "autoScale2d", "resetScale2d", "zoom2d"
+                )
+            )
+    })
+
+    output$violencia_estatal_familiar <- renderPlotly({
+        violencia_familiar_anual_estados <- violencia_familiar_anual %>%
+            filter(Entidad %in% input$estado) %>%
+            mutate(labels = glue(
+                "Estado: {Entidad} <br>",
+                "Casos promedios al mes: {comma(casos_promedio_mes, accuracy = 1)}<br>",
+                "Casos por cada 100 mil habitantes {comma(tasa_100k, accuracy = 1)}<br>",
+                "Población Estado (Inegi-2015): {comma(poblacion_total, accuracy = 1)}"
+            ))
+        plot_violencia_familiar <- ggplot(violencia_familiar_anual_estados) +
+            geom_line(aes(x = anyo, y = tasa_100k, color = Entidad)) +
+            geom_point(aes(x = anyo, y = tasa_100k, color = Entidad, text = labels)) +
+            scale_color_viridis_d() +
+            labs(x = "", y = "Casos por cada 100 mil habitantes") +
+            theme_minimal()
+        ggplotly(plot_violencia_familiar, tooltip = c("text")) %>%
+            config(
+                displaylogo = FALSE,
+                modeBarButtonsToRemove = list(
+                    "lasso2d", "toImage", "toggleSpikelines", "hoverClosestCartesian", "hoverCompareCartesian",
+                    "select2d", "zoomIn2d", "zoomOut2d", "pan2d", "autoScale2d", "resetScale2d", "zoom2d"
+                )
+            )
+    })
+
+    output$violencia_familiar_mes_valido <- renderPlotly({
+        if(input$estado_unico == "Todos") {
+            violencia_meses_con_datos <- violencia_meses_con_datos %>%
+                group_by(fecha) %>%
+                summarise(poblacion_total = sum(poblacion_total), casos_por_mes = sum(casos_por_mes)) %>%
+                mutate(Entidad = "Toda la Republica", tasa_100k = (casos_por_mes / poblacion_total) * 100000)
+        } else {
+            violencia_meses_con_datos <- violencia_meses_con_datos %>%
+                filter(Entidad %in% input$estado_unico)
+        }
+        violencia_meses_con_datos <- violencia_meses_con_datos%>%
+            mutate(labels = glue(
+                "Estado: {Entidad} <br>",
+                "Fecha: {str_to_title(format(fecha, format = '%b %Y'))}<br>",
+                "Casos promedios al mes: {comma(casos_por_mes, accuracy = 1)}<br>",
+                "Casos por cada 100 mil habitantes: {comma(tasa_100k, accuracy = 1)}<br>",
+                "Población Estado (Inegi-2015): {comma(poblacion_total, accuracy = 1)}"
+            )) %>%
+            mutate(anyo = factor(year(fecha)), mes = str_to_title(month(fecha, label = T)))
+
+        plot_violencia_mes_datos <- ggplot(violencia_meses_con_datos, aes(x = mes, y = tasa_100k, fill = anyo, text = labels)) +
+            geom_col(position = "dodge") +
+            geom_text(aes(label = anyo, y = tasa_100k - (tasa_100k * 0.2) ), position = position_dodge(0.9), color = "gray") +
+            scale_fill_viridis_d() +
+            labs(x = "", y = "Casos por cada 100 mil habitantes") +
+            theme_minimal() +
+            theme(legend.position = "none")
+        ggplotly(plot_violencia_mes_datos, tooltip = c("text")) %>%
+            config(
+                displaylogo = FALSE,
+                modeBarButtonsToRemove = list(
+                    "lasso2d", "toImage", "toggleSpikelines", "hoverClosestCartesian", "hoverCompareCartesian",
+                    "select2d", "zoomIn2d", "zoomOut2d", "pan2d", "autoScale2d", "resetScale2d", "zoom2d"
+                )
             )
     })
 
