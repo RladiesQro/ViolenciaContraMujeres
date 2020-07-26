@@ -11,13 +11,13 @@ install.package("devtools")
 Con ello se podra instalar todo el paquete con el comando:
 
 ```r
-devtools::install_github("RladiesQro/violencia_intrafamiliar")
+devtools::install_github("RladiesQro/ViolenciaIntrafamiliar")
 ```
 
 Despues de la descarga se carga el paquete
 
 ```r
-library(violencia_intrafamiliar)
+library(ViolenciaIntrafamiliar)
 ```
 
 La applicación shiny se podra ejecutar usando:
