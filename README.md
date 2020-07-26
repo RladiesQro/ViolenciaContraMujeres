@@ -23,5 +23,5 @@ library(ViolenciaContraMujeres)
 La applicación shiny se podra ejecutar usando:
 
 ```r
-shiny::runApp('inst/app')
+ejecutaShyniApp()
 ```

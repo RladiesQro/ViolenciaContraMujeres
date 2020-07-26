@@ -7,8 +7,8 @@
 #' @export
 #'
 #' @examples \dontrun{runShinyApp()}
-ejecutaShyniApp <- function() {
-  DirectorioApp <- system.file("inst/app", package = "ViolenciaContraMujeres")
+ejecutaShinyApp <- function() {
+  DirectorioApp <- system.file("app", package = "ViolenciaContraMujeres")
   if (DirectorioApp == "") {
     stop("No se encontro la applicación Shiny, prueba a reinstalar el paquete `ViolenciaContraMujeres`.", call. = FALSE)
   }
