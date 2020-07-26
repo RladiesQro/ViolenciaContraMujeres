@@ -18,12 +18,12 @@ dashboardPage(
                 fluidRow(
                     box(
                         leafletOutput("mapa_violencia"),
-                        title = "Mapa de violencia contra la Mujer por estados",
+                        title = "Mapa de violencia contra la mujer por estados",
                         width = 6
                     ),
                     box(
                         leafletOutput("mapa_violencia_familiar"),
-                        title = HTML("Mapa de violencia <b>IntraFamiliar</b> contra la Mujer en estados"),
+                        title = HTML("Mapa de violencia <b>Familiar</b> contra la mujer en estados"),
                         width = 6
                     )
                 ),
@@ -41,16 +41,16 @@ dashboardPage(
                             multiple = T,
                             selected = "Querétaro"
                         ),
-                        title = "Estado seleccionado en Mapas:",
+                        title = "Estado seleccionado en mapas:",
                         width = 12,
                         collapsible = TRUE
                     )
                 ),
                 fluidRow(
-                    box(plotlyOutput("violencia_estatal"), title = "Violencia contra la Mujer en estados", width = 6),
+                    box(plotlyOutput("violencia_estatal"), title = "Violencia contra la mujer en estados", width = 6),
                     box(
                         plotlyOutput("violencia_estatal_familiar"),
-                        title = HTML("Violencia <b>IntraFamiliar</b> contra la Mujer en estados"),
+                        title = HTML("Violencia <b>Familiar</b> contra la mujer en estados"),
                         width = 6
                     )
                 ),
@@ -74,7 +74,7 @@ dashboardPage(
                                 plotlyOutput("violencia_familiar_mes_valido")
                             )
                         ),
-                        title = HTML("Violencia <b>IntraFamiliar</b> contra la Mujer para los meses con datos"),
+                        title = HTML("Violencia <b>Familiar</b> contra la mujer para los meses con datos"),
                         width = 12
                     )
                 )
