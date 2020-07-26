@@ -27,7 +27,7 @@ CreaPaletaPersonalizada <- function(vector_usar, vector_colores, color_na = "#9C
 
 #' Definir Meses sin datos registrados
 #'
-#' Detecta los meses del dataset que no tienen registros de violencia, en
+#' Detecta los meses del dataset que no tienen registros de violencia contra la mujer, en
 #' general puede deberse a años incompletos en información.
 #'
 #' @param datos_violencia Dataset de violencia procesado
@@ -77,7 +77,7 @@ AgregaPoligonos <- function(data_with_entity, poligonos_mx) {
 #' Usando los datos de población por estado para el año 2015 se calcula la tasa
 #' de casos por cada 100,000 habitantes y permitir una comparativa un tanto ponderada
 #'
-#' @param resumen_datos_estatal Datos con los casos de violencia por estado
+#' @param resumen_datos_estatal Datos con los casos de violencia contra la mujer por estado
 #' @param poblacion_inegi_2015 Set de datos con la población total por estado
 #' @param columna_a_tasa Cadena de tecto con el nombre de la olumna con los casos de violencia que se transforman a tasa
 #'

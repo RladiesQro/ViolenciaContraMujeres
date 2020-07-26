@@ -13,7 +13,7 @@ DefinirMesesSinDatos(datos_violencia)
 Vector con las fechas del tipo "2019-11-01"
 }
 \description{
-Detecta los meses del dataset que no tienen registros de violencia, en
+Detecta los meses del dataset que no tienen registros de violencia contra la mujer, en
 general puede deberse a años incompletos en información.
 }
 \examples{

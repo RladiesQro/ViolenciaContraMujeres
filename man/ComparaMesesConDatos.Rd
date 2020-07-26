@@ -17,7 +17,7 @@ ComparaMesesConDatos(datos_violencia, poblacion_inegi_2015, filtro.tipo = NULL)
 Genera un conjunto de datos que compara solo los meses con información
 }
 \description{
-Genera un conjunto de datos con los meses que presentan datos en todos los
+Genera un dataframe con los meses que presentan datos en todos los
 años existentes en el conjunto de datos. La ocurrencia de casos se representa con
 la tasa por cada 100 mil habitantes. Ademas permite filtrar los casos de violencia
 por el tipo.

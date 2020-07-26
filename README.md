@@ -1,4 +1,4 @@
-# Violencia Intrafamiliar
+# Violencia contra las Mujeres
 Script para el conversatorio, agosto 2020
 
 ## Uso del Paquete
@@ -11,13 +11,13 @@ install.package("devtools")
 Con ello se podra instalar todo el paquete con el comando:
 
 ```r
-devtools::install_github("RladiesQro/ViolenciaIntrafamiliar")
+devtools::install_github("RladiesQro/ViolenciaContraMujeres")
 ```
 
 Despues de la descarga se carga el paquete
 
 ```r
-library(ViolenciaIntrafamiliar)
+library(ViolenciaContraMujeres)
 ```
 
 La applicación shiny se podra ejecutar usando:

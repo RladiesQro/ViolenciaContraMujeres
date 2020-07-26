@@ -1,10 +1,10 @@
-#' Casos Normalizados de violencia por estado
+#' Casos Normalizados de violencia contra la mujer por estado
 #'
-#' Calcula la tasa de casos de violencia por cada 100 mil habitantes para cada estado
-#' Ademas de que normaliza el valor de la tasa por cada 100 mil habitantes y permite
+#' Calcula la tasa de casos de violencia contra la mujer por cada 100 mil habitantes
+#' para cada estado. Ademas de que normaliza el valor de la tasa por cada 100 mil habitantes y permite
 #' filtrar algún tipo de violencia para el calculo.
 #'
-#' @param datos_violencia Datos de violencia para la republica mexicana
+#' @param datos_violencia Datos de violencia contra la mujer para la republica mexicana
 #' @param poblacion_inegi_2015 Datos de población para cada estado tomados del Inegi 2015
 #' @param filtro.tipo Cadena de texto con el Tipo por el que queremos filtrar los datos si no se
 #' asigna o se deja NULL se usaran todos los tipos de violencia
@@ -38,10 +38,10 @@ CasosNormalizadosRepublica <- function(datos_violencia, poblacion_inegi_2015, fi
 #' Tasa Promedio Mensual
 #'
 #' Calcula la tasa promedio mensual de los meses con información
-#' dentro del conjunto de datos de violencia para México.
+#' dentro del conjunto de datos de violencia contra la mujer para México.
 #' Permite hacer un filtrado por tipo de violencia.
 #'
-#' @param datos_violencia Datos de violencia para la republica mexicana
+#' @param datos_violencia Datos de violencia contra la mujer para la republica mexicana
 #' @param poblacion_inegi_2015 Población registrada para el año 2015
 #' @param filtro.tipo Filtro del tipo de violencia ocurrida, en caso de ser NULL se
 #' usan todos los tipos de violencia
@@ -75,7 +75,7 @@ TasaPromedioMensual <- function(datos_violencia, poblacion_inegi_2015, filtro.ti
 
 #' Comparativa de Meses con Datos
 #'
-#' Genera un conjunto de datos con los meses que presentan datos en todos los
+#' Genera un dataframe con los meses que presentan datos en todos los
 #' años existentes en el conjunto de datos. La ocurrencia de casos se representa con
 #' la tasa por cada 100 mil habitantes. Ademas permite filtrar los casos de violencia
 #' por el tipo.

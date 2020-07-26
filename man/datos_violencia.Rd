@@ -3,7 +3,7 @@
 \docType{data}
 \name{datos_violencia}
 \alias{datos_violencia}
-\title{Datos de violencia en México}
+\title{Datos de violencia contra la Mujer en México}
 \format{
 Un tibble con 7 columnas y 225792 renglones:
 \describe{

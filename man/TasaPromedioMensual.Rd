@@ -7,7 +7,7 @@
 TasaPromedioMensual(datos_violencia, poblacion_inegi_2015, filtro.tipo = NULL)
 }
 \arguments{
-\item{datos_violencia}{Datos de violencia para la republica mexicana}
+\item{datos_violencia}{Datos de violencia contra la mujer para la republica mexicana}
 
 \item{poblacion_inegi_2015}{Población registrada para el año 2015}
 
@@ -19,7 +19,7 @@ Regresa un conjunto de datos con la tasa promedio por cada 100mil habitantes al 
 }
 \description{
 Calcula la tasa promedio mensual de los meses con información
-dentro del conjunto de datos de violencia para México.
+dentro del conjunto de datos de violencia contra la mujer para México.
 Permite hacer un filtrado por tipo de violencia.
 }
 \examples{
