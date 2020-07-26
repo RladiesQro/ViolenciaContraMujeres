@@ -22,7 +22,14 @@ Imports:
     magrittr,
     lubridate,
     leaflet,
-    rlang
+    rlang,
+    shiny,
+    glue,
+    plotly,
+    scales,
+    shinydashboard,
+    shinyWidgets,
+    stringr
 Depends: R (>= 2.10)
 Suggests: 
     testthat
