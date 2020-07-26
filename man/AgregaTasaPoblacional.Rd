@@ -25,5 +25,11 @@ Usando los datos de población por estado para el año 2015 se calcula la tasa
 de casos por cada 100,000 habitantes y permitir una comparativa un tanto ponderada
 }
 \examples{
-\dontrun{AgregaTasaPoblacional(resumen_datos_estatal, poblacion_inegi_2015, columna_a_tasa = "casos_por_estado")}
+
+  AgregaTasaPoblacional(
+    resumen_datos_estatal,
+    poblacion_inegi_2015,
+    columna_a_tasa = "casos_por_estado"
+  )
+
 }

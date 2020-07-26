@@ -4,10 +4,12 @@
 \alias{ComparaMesesConDatos}
 \title{Comparativa de Meses con Datos}
 \usage{
-ComparaMesesConDatos(datos_violencia, filtro.tipo = NULL)
+ComparaMesesConDatos(datos_violencia, poblacion_inegi_2015, filtro.tipo = NULL)
 }
 \arguments{
 \item{datos_violencia}{Conjunto de datos con el conteo de casos de violecina en méxico}
+
+\item{poblacion_inegi_2015}{Población registrada para el año 2015}
 
 \item{filtro.tipo}{Cadena de texto con el tipo de violencia a filtrar}
 }
@@ -21,5 +23,9 @@ la tasa por cada 100 mil habitantes. Ademas permite filtrar los casos de violenc
 por el tipo.
 }
 \examples{
-ComparaMesesConDatos(datos_violencia, filtro.tipo = "Violencia familiar")
+ComparaMesesConDatos(
+  datos_violencia,
+  poblacion_inegi_2015,
+  filtro.tipo = "Violencia familiar"
+)
 }

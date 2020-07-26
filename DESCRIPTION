@@ -7,7 +7,7 @@ Authors@R:
            role = c("aut", "cre"),
            email = "first.last@example.com",
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: Permite explorar los datos de violencia en México, calculando la tasa por cada 100 mil habitantes con resumenes por mes, año o estado
+Description: Permite explorar los datos de violencia en México. Calculando la tasa por cada 100 mil habitantes con resumenes por mes, año o estado.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -21,7 +21,8 @@ Imports:
     sf,
     magrittr,
     lubridate,
-    leaflet
+    leaflet,
+    rlang
 Depends: R (>= 2.10)
 Suggests: 
     testthat

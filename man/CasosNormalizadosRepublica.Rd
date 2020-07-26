@@ -27,5 +27,9 @@ Ademas de que normaliza el valor de la tasa por cada 100 mil habitantes y permit
 filtrar algún tipo de violencia para el calculo.
 }
 \examples{
-CasosNormalizadosRepublica(datos_violencia, poblacion_inegi_2015, filtro.tipo = "Violencia familiar")
+CasosNormalizadosRepublica(
+  datos_violencia,
+  poblacion_inegi_2015,
+  filtro.tipo = "Violencia familiar"
+)
 }
