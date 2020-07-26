@@ -10,7 +10,7 @@ library(shinyWidgets)
 library(stringr)
 library(sf)
 library(purrr)
-library(ViolenciaIntrafamiliar)
+library(ViolenciaContraMujeres)
 
 
 violencia_anual <- TasaPromedioMensual(datos_violencia, poblacion_inegi_2015)
