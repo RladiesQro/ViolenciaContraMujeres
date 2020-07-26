@@ -1,4 +1,4 @@
-#' Datos de violencia en México
+#' Datos de violencia contra la Mujer en México
 #'
 #' Este conjunto de datos presenta el conteo de casos para diferentes tipos de violencia,
 #' con información de fecha, entidad, tipo, subtipo, modalidad y Bien Jurídico involucrado.

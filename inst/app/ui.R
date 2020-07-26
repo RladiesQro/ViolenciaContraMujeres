@@ -1,5 +1,5 @@
 dashboardPage(
-    dashboardHeader(title = "Violencia IntraFamiliar"),
+    dashboardHeader(title = "Violencia Contra la Mujer"),
     dashboardSidebar(
         sidebarMenu(
             menuItem(
@@ -18,12 +18,12 @@ dashboardPage(
                 fluidRow(
                     box(
                         leafletOutput("mapa_violencia"),
-                        title = "Mapa de violencia en estados",
+                        title = "Mapa de violencia contra la Mujer por estados",
                         width = 6
                     ),
                     box(
                         leafletOutput("mapa_violencia_familiar"),
-                        title = HTML("Mapa de violencia <b>IntraFamiliar</b> en estados"),
+                        title = HTML("Mapa de violencia <b>IntraFamiliar</b> contra la Mujer en estados"),
                         width = 6
                     )
                 ),
@@ -47,10 +47,10 @@ dashboardPage(
                     )
                 ),
                 fluidRow(
-                    box(plotlyOutput("violencia_estatal"), title = "Violencia en estados", width = 6),
+                    box(plotlyOutput("violencia_estatal"), title = "Violencia contra la Mujer en estados", width = 6),
                     box(
                         plotlyOutput("violencia_estatal_familiar"),
-                        title = HTML("Violencia <b>IntraFamiliar</b> en estados"),
+                        title = HTML("Violencia <b>IntraFamiliar</b> contra la Mujer en estados"),
                         width = 6
                     )
                 ),
@@ -74,7 +74,7 @@ dashboardPage(
                                 plotlyOutput("violencia_familiar_mes_valido")
                             )
                         ),
-                        title = HTML("Violencia <b>IntraFamiliar</b> para los meses con datos"),
+                        title = HTML("Violencia <b>IntraFamiliar</b> contra la Mujer para los meses con datos"),
                         width = 12
                     )
                 )

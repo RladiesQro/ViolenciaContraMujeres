@@ -11,7 +11,7 @@ AgregaTasaPoblacional(
 )
 }
 \arguments{
-\item{resumen_datos_estatal}{Datos con los casos de violencia por estado}
+\item{resumen_datos_estatal}{Datos con los casos de violencia contra la mujer por estado}
 
 \item{poblacion_inegi_2015}{Set de datos con la población total por estado}
 
@@ -25,11 +25,11 @@ Usando los datos de población por estado para el año 2015 se calcula la tasa
 de casos por cada 100,000 habitantes y permitir una comparativa un tanto ponderada
 }
 \examples{
-
+\dontrun{
   AgregaTasaPoblacional(
     resumen_datos_estatal,
     poblacion_inegi_2015,
     columna_a_tasa = "casos_por_estado"
   )
-
+}
 }
