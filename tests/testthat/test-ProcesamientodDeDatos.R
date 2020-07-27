@@ -22,13 +22,13 @@ test_that("Meses sin datos", {
 
 test_that("Agrega poligonos", {
   datos_poligonos <- AgregaPoligonos(datos_violencia, poligonos_mx)
-  expect_equal(
-    sort(as.character(unique(datos_poligonos$Entidad))),
-    c("Aguascalientes", "Baja California", "Baja California Sur", "Campeche", "Chiapas", "Chihuahua", "Ciudad de México",
+  expect_true(
+    all(datos_poligonos$Entidad %in% c(
+      "Aguascalientes", "Baja California", "Baja California Sur", "Campeche", "Chiapas", "Chihuahua", "Ciudad de México",
       "Coahuila de Zaragoza", "Colima", "Durango", "Guanajuato", "Guerrero", "Hidalgo", "Jalisco", "Michoacán de Ocampo",
       "Morelos", "México", "Nayarit", "Nuevo León", "Oaxaca", "Puebla", "Querétaro", "Quintana Roo", "San Luis Potosí",
       "Sinaloa", "Sonora", "Tabasco", "Tamaulipas", "Tlaxcala", "Veracruz de Ignacio de la Llave",
-      "Yucatán", "Zacatecas")
+      "Yucatán", "Zacatecas"))
   )
   expect_s3_class(datos_poligonos, "sf")
   expect_s3_class(datos_poligonos$fecha, "Date")
@@ -47,13 +47,13 @@ test_that("Agrega población", {
     columna_a_tasa = "casos_totales"
   )
   expect_named(datos_corregidos_tasa, c("Entidad", "casos_totales", "poblacion_total", "tasa_100k"))
-  expect_equal(
-    sort(as.character(datos_corregidos_tasa$Entidad)),
-    c("Aguascalientes", "Baja California", "Baja California Sur", "Campeche", "Chiapas", "Chihuahua", "Ciudad de México",
+  expect_true(
+    all(datos_corregidos_tasa$Entidad %in% c(
+      "Aguascalientes", "Baja California", "Baja California Sur", "Campeche", "Chiapas", "Chihuahua", "Ciudad de México",
       "Coahuila de Zaragoza", "Colima", "Durango", "Guanajuato", "Guerrero", "Hidalgo", "Jalisco", "Michoacán de Ocampo",
       "Morelos", "México", "Nayarit", "Nuevo León", "Oaxaca", "Puebla", "Querétaro", "Quintana Roo", "San Luis Potosí",
       "Sinaloa", "Sonora", "Tabasco", "Tamaulipas", "Tlaxcala", "Veracruz de Ignacio de la Llave",
-      "Yucatán", "Zacatecas")
+      "Yucatán", "Zacatecas"))
   )
   expect_length(datos_corregidos_tasa$Entidad, 32)
   expect_equal(sum(datos_corregidos_tasa$casos_totales), 9909757)
