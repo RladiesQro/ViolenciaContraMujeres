@@ -20,5 +20,5 @@ Agrega a los datos originales una nueva columna de geometría con los polígonos
 Convierte el set de datos a un objeto SF específico para información georeferenciada.
 }
 \examples{
-\dontrun{AgregaPoligonos(datos_violencia, poligonos_mx)}
+AgregaPoligonos(datos_violencia, poligonos_mx)
 }

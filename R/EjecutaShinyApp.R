@@ -10,7 +10,7 @@
 ejecutaShinyApp <- function() {
   DirectorioApp <- system.file("app", package = "ViolenciaContraMujeres")
   if (DirectorioApp == "") {
-    stop("No se encontro la applicación Shiny, prueba a reinstalar el paquete `ViolenciaContraMujeres`.", call. = FALSE)
+    stop("No se encontro la Shiny App, prueba a reinstalar el paquete `ViolenciaContraMujeres`.", call. = FALSE)
   }
   shiny::runApp(DirectorioApp, display.mode = "normal")
 }

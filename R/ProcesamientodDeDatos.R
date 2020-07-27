@@ -59,8 +59,9 @@ DefinirMesesSinDatos <- function(datos_violencia) {
 #' @export
 #'
 #' @importFrom rlang .data
+#' @import sf
 #'
-#' @examples \dontrun{AgregaPoligonos(datos_violencia, poligonos_mx)}
+#' @examples AgregaPoligonos(datos_violencia, poligonos_mx)
 AgregaPoligonos <- function(data_with_entity, poligonos_mx) {
   data_with_entity %>%
     dplyr::mutate(Entidad = as.character(.data$Entidad)) %>%
