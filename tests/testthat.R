@@ -1,4 +1,4 @@
 library(testthat)
-library(ViolenciaIntrafamiliar)
+library(ViolenciaContraMujeres)
 
-test_check("ViolenciaIntrafamiliar")
+test_check("ViolenciaContraMujeres")

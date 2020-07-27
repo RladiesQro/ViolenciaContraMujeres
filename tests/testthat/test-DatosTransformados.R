@@ -1,13 +1,12 @@
 test_that("Integridad casos normalizados", {
   casos_normalizados <- CasosNormalizadosRepublica(datos_violencia, poblacion_inegi_2015)
   expect_length(casos_normalizados$Entidad, 32)
-  expect_equal(
-    sort(as.character(casos_normalizados$Entidad)),
-    c("Aguascalientes", "Baja California", "Baja California Sur", "Campeche", "Chiapas", "Chihuahua", "Ciudad de México",
+  expect_true(
+    all(casos_normalizados$Entidad %in% c("Aguascalientes", "Baja California", "Baja California Sur", "Campeche", "Chiapas", "Chihuahua", "Ciudad de México",
       "Coahuila de Zaragoza", "Colima", "Durango", "Guanajuato", "Guerrero", "Hidalgo", "Jalisco", "Michoacán de Ocampo",
       "Morelos", "México", "Nayarit", "Nuevo León", "Oaxaca", "Puebla", "Querétaro", "Quintana Roo", "San Luis Potosí",
       "Sinaloa", "Sonora", "Tabasco", "Tamaulipas", "Tlaxcala", "Veracruz de Ignacio de la Llave",
-      "Yucatán", "Zacatecas")
+      "Yucatán", "Zacatecas"))
   )
   expect_equal(sum(casos_normalizados$casos_por_estado),  9909757)
   expect_equal(sum(casos_normalizados$tasa_100k),  269614.3, tolerance = 1e-3)
@@ -19,13 +18,13 @@ test_that("Integridad casos normalizados con filtro Violencia Familiar", {
     datos_violencia, poblacion_inegi_2015, filtro.tipo = "Violencia familiar"
   )
   expect_length(casos_normalizados$Entidad, 32)
-  expect_equal(
-    sort(as.character(casos_normalizados$Entidad)),
-    c("Aguascalientes", "Baja California", "Baja California Sur", "Campeche", "Chiapas", "Chihuahua", "Ciudad de México",
+  expect_true(
+    all(casos_normalizados$Entidad %in% c(
+      "Aguascalientes", "Baja California", "Baja California Sur", "Campeche", "Chiapas", "Chihuahua", "Ciudad de México",
       "Coahuila de Zaragoza", "Colima", "Durango", "Guanajuato", "Guerrero", "Hidalgo", "Jalisco", "Michoacán de Ocampo",
       "Morelos", "México", "Nayarit", "Nuevo León", "Oaxaca", "Puebla", "Querétaro", "Quintana Roo", "San Luis Potosí",
       "Sinaloa", "Sonora", "Tabasco", "Tamaulipas", "Tlaxcala", "Veracruz de Ignacio de la Llave",
-      "Yucatán", "Zacatecas")
+      "Yucatán", "Zacatecas"))
   )
   expect_equal(sum(casos_normalizados$casos_por_estado),  919736)
   expect_equal(sum(casos_normalizados$tasa_100k),  27048.77, tolerance = 1e-3)
@@ -35,13 +34,13 @@ test_that("Integridad casos normalizados con filtro Violencia Familiar", {
 test_that("Integridad Tasa Promedio Mensual", {
   tasa_promedio_mensual <- TasaPromedioMensual(datos_violencia, poblacion_inegi_2015)
   expect_length(unique(tasa_promedio_mensual$Entidad), 32)
-  expect_equal(
-    sort(as.character(unique(tasa_promedio_mensual$Entidad))),
-    c("Aguascalientes", "Baja California", "Baja California Sur", "Campeche", "Chiapas", "Chihuahua", "Ciudad de México",
+  expect_true(
+    all(tasa_promedio_mensual$Entidad %in% c(
+      "Aguascalientes", "Baja California", "Baja California Sur", "Campeche", "Chiapas", "Chihuahua", "Ciudad de México",
       "Coahuila de Zaragoza", "Colima", "Durango", "Guanajuato", "Guerrero", "Hidalgo", "Jalisco", "Michoacán de Ocampo",
       "Morelos", "México", "Nayarit", "Nuevo León", "Oaxaca", "Puebla", "Querétaro", "Quintana Roo", "San Luis Potosí",
       "Sinaloa", "Sonora", "Tabasco", "Tamaulipas", "Tlaxcala", "Veracruz de Ignacio de la Llave",
-      "Yucatán", "Zacatecas")
+      "Yucatán", "Zacatecas"))
   )
   expect_equal(sum(tasa_promedio_mensual$casos_promedio_mes),  912886.8, tolerance = 1e-3)
   expect_equal(sum(tasa_promedio_mensual$tasa_100k), 24785.4, tolerance = 1e-3)
@@ -58,13 +57,13 @@ test_that("Integridad Tasa Promedio Mensual", {
 test_that("Integridad Tasa Promedio Mensual con filtro de Violencia Familiar", {
   tasa_promedio_mensual <- TasaPromedioMensual(datos_violencia, poblacion_inegi_2015, filtro.tipo = "Violencia familiar")
   expect_length(unique(tasa_promedio_mensual$Entidad), 32)
-  expect_equal(
-    sort(as.character(unique(tasa_promedio_mensual$Entidad))),
-    c("Aguascalientes", "Baja California", "Baja California Sur", "Campeche", "Chiapas", "Chihuahua", "Ciudad de México",
+  expect_true(
+    all(tasa_promedio_mensual$Entidad %in% c(
+      "Aguascalientes", "Baja California", "Baja California Sur", "Campeche", "Chiapas", "Chihuahua", "Ciudad de México",
       "Coahuila de Zaragoza", "Colima", "Durango", "Guanajuato", "Guerrero", "Hidalgo", "Jalisco", "Michoacán de Ocampo",
       "Morelos", "México", "Nayarit", "Nuevo León", "Oaxaca", "Puebla", "Querétaro", "Quintana Roo", "San Luis Potosí",
       "Sinaloa", "Sonora", "Tabasco", "Tamaulipas", "Tlaxcala", "Veracruz de Ignacio de la Llave",
-      "Yucatán", "Zacatecas")
+      "Yucatán", "Zacatecas"))
   )
   expect_equal(sum(tasa_promedio_mensual$casos_promedio_mes),  86613.25, tolerance = 1e-3)
   expect_equal(sum(tasa_promedio_mensual$tasa_100k), 2548.688, tolerance = 1e-3)
@@ -81,13 +80,13 @@ test_that("Integridad Tasa Promedio Mensual con filtro de Violencia Familiar", {
 test_that("Datos para comparativa de meses con datos", {
   comparativa_meses_condatos <- ComparaMesesConDatos(datos_violencia, poblacion_inegi_2015)
   expect_length(unique(comparativa_meses_condatos$Entidad), 32)
-  expect_equal(
-    sort(as.character(unique(comparativa_meses_condatos$Entidad))),
-    c("Aguascalientes", "Baja California", "Baja California Sur", "Campeche", "Chiapas", "Chihuahua", "Ciudad de México",
+  expect_true(
+    all(comparativa_meses_condatos$Entidad %in% c(
+      "Aguascalientes", "Baja California", "Baja California Sur", "Campeche", "Chiapas", "Chihuahua", "Ciudad de México",
       "Coahuila de Zaragoza", "Colima", "Durango", "Guanajuato", "Guerrero", "Hidalgo", "Jalisco", "Michoacán de Ocampo",
       "Morelos", "México", "Nayarit", "Nuevo León", "Oaxaca", "Puebla", "Querétaro", "Quintana Roo", "San Luis Potosí",
       "Sinaloa", "Sonora", "Tabasco", "Tamaulipas", "Tlaxcala", "Veracruz de Ignacio de la Llave",
-      "Yucatán", "Zacatecas")
+      "Yucatán", "Zacatecas"))
   )
   expect_equal(sum(comparativa_meses_condatos$casos_por_mes), 4484350)
   expect_equal(sum(comparativa_meses_condatos$tasa_100k), 122329.7, tolerance = 1e-3)
@@ -111,13 +110,13 @@ test_that("Datos para comparativa de meses con datos", {
 test_that("Datos para comparativa de meses con datos y filtro de Violencia Familiar", {
   comparativa_meses_condatos <- ComparaMesesConDatos(datos_violencia, poblacion_inegi_2015, filtro.tipo = "Violencia familiar")
   expect_length(unique(comparativa_meses_condatos$Entidad), 32)
-  expect_equal(
-    sort(as.character(unique(comparativa_meses_condatos$Entidad))),
-    c("Aguascalientes", "Baja California", "Baja California Sur", "Campeche", "Chiapas", "Chihuahua", "Ciudad de México",
+  expect_true(
+    all(comparativa_meses_condatos$Entidad %in% c(
+      "Aguascalientes", "Baja California", "Baja California Sur", "Campeche", "Chiapas", "Chihuahua", "Ciudad de México",
       "Coahuila de Zaragoza", "Colima", "Durango", "Guanajuato", "Guerrero", "Hidalgo", "Jalisco", "Michoacán de Ocampo",
       "Morelos", "México", "Nayarit", "Nuevo León", "Oaxaca", "Puebla", "Querétaro", "Quintana Roo", "San Luis Potosí",
       "Sinaloa", "Sonora", "Tabasco", "Tamaulipas", "Tlaxcala", "Veracruz de Ignacio de la Llave",
-      "Yucatán", "Zacatecas")
+      "Yucatán", "Zacatecas"))
   )
   expect_equal(sum(comparativa_meses_condatos$casos_por_mes), 421752)
   expect_equal(sum(comparativa_meses_condatos$tasa_100k), 12380.16, tolerance = 1e-3)
