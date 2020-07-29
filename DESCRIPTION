@@ -6,9 +6,9 @@ Authors@R:
            family = "Last",
            role = c("aut", "cre"),
            email = "first.last@example.com")
-Description: Este paquete permite explorar los datos de violencia en México. Provee de acceso al dataset de Violencia en
-    México hasta los primeros meses del 2020. Permite la ejecución de una applicación Shiny donde se muestran algunas
-    representaciones  gráficas.
+Description: Este paquete permite explorar los datos de violencia en México.
+    Provee de acceso al dataset de Violencia en México hasta los primeros meses del 2020.
+    Permite la ejecución de una applicación Shiny donde se muestran algunas representaciones  gráficas.
     Incluye los conjuntos de datos
     \itemize{
     \item{\code{\link{datos_violencia}}}
@@ -47,7 +47,8 @@ Imports:
     scales,
     shinydashboard,
     shinyWidgets,
-    stringr
+    stringr,
+    ggplot2
 Depends: R (>= 2.10)
 Suggests: 
     testthat,
