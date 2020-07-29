@@ -68,3 +68,12 @@ La applicación shiny se podra ejecutar usando:
 ```r
 ejecutaShinyApp()
 ```
+
+> En caso de que el paquete se haya actualizado para que obtener los cambios se necesita **reinstalar** el paquete y
+en caso de tener la sesión de R abierta. Reiniciar R o incluso todo Rstudio
+
+Mas información en:
+
+```r
+?ViolenciaContraMujeres
+```

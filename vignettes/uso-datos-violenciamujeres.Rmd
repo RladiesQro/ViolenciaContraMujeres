@@ -1,0 +1,102 @@
+---
+title: "Uso de datos de violencia contra Mujeres"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Uso de datos de violencia contra Mujeres}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, echo=FALSE, results='hide',message=FALSE}
+library(dplyr)
+library(ggplot2)
+library(lubridate)
+library(sf)
+library(ViolenciaContraMujeres)
+```
+
+## Datos de violencia contra la Mujer
+
+Este paquete contiene 3 sets de datos que se utilizan para representar la información de violencia contra la mujer:
+
+- Datos de violencia
+- Población estatal Inegi 2015
+- Archivos con información geográfica de los estados.
+
+Estos se cargan en memoria cuando se llama el paquete `library(ViolenciaContraMujeres)`.
+
+En especial podemos hacer uso de `datos_violencia` con solo llamarlo y consultar su estructura en la ayuda `?datos_violencia`
+
+```{r Mostrar datos de violencia}
+datos_violencia
+```
+
+Podemos usar funciones para revisar la estructura como `glimpse()` de *dplyr*
+
+```{r}
+glimpse(datos_violencia)
+```
+
+Una de las representaciones que se muestran es la que gráfica los casos de violencia general por año. 
+Esto se puede generar de la siguiente forma
+
+```{r}
+
+datos_anyo_estado <- datos_violencia %>% 
+  group_by(Entidad, anyo = year(fecha)) %>% 
+  summarise(numero_casos = sum(ocurrencia)) %>% 
+  filter(Entidad == "Querétaro")
+
+ggplot(datos_anyo_estado) +
+  geom_line(aes(x = anyo, y = numero_casos)) +
+  theme_minimal()
+```
+
+Sin embargo podemos ver una caída en el año 2020, si revisamos los meses:
+
+```{r}
+datos_violencia %>% 
+  filter(fecha >= "2020-01-01") %>% 
+  group_by(Entidad, mes = month(fecha, label = TRUE)) %>% 
+  summarise(numero_casos = sum(ocurrencia)) %>% 
+  filter(Entidad == "Querétaro")
+```
+
+Sí necesitamos filtrar los meses sin información el paquete cuenta con una función que ya lo hace:
+
+```{r}
+meses_sin_datos <- DefinirMesesSinDatos(datos_violencia)
+meses_sin_datos
+```
+
+El paquete ademas cuenta con funciones que calculan la tasa por cada 100mil habitantes
+
+```{r}
+datos_estado <- CasosNormalizadosRepublica(datos_violencia, poblacion_inegi_2015)
+datos_estado
+```
+
+O que agregar los polígonos de estado:
+
+```{r}
+datos_estado_poligonos <- AgregaPoligonos(datos_estado, poligonos_mx)
+datos_estado_poligonos
+```
+
+Que se encuentran en la columna **geometry**, la cual puede ser usada en mapas
+
+```{r}
+ggplot(datos_estado_poligonos) +
+  geom_sf(aes(fill=tasa_100k)) +
+  scale_fill_gradient(low = "#56B1F7", high = "#132B43") +
+  theme_minimal()
+```
+
+Los datos aún tienen mucha información seguro **encontraras algo mas.**
