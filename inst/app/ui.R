@@ -32,13 +32,13 @@ dashboardPage(
                         pickerInput(
                             inputId = "estado",
                             label = NULL,
-                            choices = vector_estados,
+                            choices = rbind("Todos", vector_estados),
                             options = list(
                                 `actions-box` = TRUE,
                                 size = 10,
                                 `selected-text-format` = "count > 5"
                             ),
-                            multiple = T,
+                            multiple = F,
                             selected = "Querétaro"
                         ),
                         title = "Estado seleccionado en mapas:",

@@ -4,12 +4,20 @@
 \alias{TasaPromedioMensual}
 \title{Tasa Promedio Mensual}
 \usage{
-TasaPromedioMensual(datos_violencia, poblacion_inegi_2015, filtro.tipo = NULL)
+TasaPromedioMensual(
+  datos_violencia,
+  poblacion_inegi_2015,
+  entidad = NULL,
+  filtro.tipo = NULL
+)
 }
 \arguments{
 \item{datos_violencia}{Datos de violencia contra la mujer para la republica mexicana}
 
 \item{poblacion_inegi_2015}{Población registrada para el año 2015}
+
+\item{entidad}{Entidad para filtrar el conjunto de datos, si se declara "Todos" se calcula para
+toda la republica, si se declara a NULL se calcula para cada estado.}
 
 \item{filtro.tipo}{Filtro del tipo de violencia ocurrida, en caso de ser NULL se
 usan todos los tipos de violencia}
@@ -23,5 +31,12 @@ dentro del conjunto de datos de violencia contra la mujer para México.
 Permite hacer un filtrado por tipo de violencia.
 }
 \examples{
+TasaPromedioMensual(datos_violencia, poblacion_inegi_2015)
 TasaPromedioMensual(datos_violencia, poblacion_inegi_2015, filtro.tipo = "Violencia familiar")
+TasaPromedioMensual(
+  datos_violencia, poblacion_inegi_2015, entidad = "Querétaro", filtro.tipo = "Violencia familiar"
+)
+TasaPromedioMensual(
+  datos_violencia, poblacion_inegi_2015, entidad = "Todos", filtro.tipo = "Violencia familiar"
+)
 }

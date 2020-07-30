@@ -43,6 +43,8 @@ CasosNormalizadosRepublica <- function(datos_violencia, poblacion_inegi_2015, fi
 #'
 #' @param datos_violencia Datos de violencia contra la mujer para la republica mexicana
 #' @param poblacion_inegi_2015 Población registrada para el año 2015
+#' @param entidad Entidad para filtrar el conjunto de datos, si se declara "Todos" se calcula para
+#' toda la republica, si se declara a NULL se calcula para cada estado.
 #' @param filtro.tipo Filtro del tipo de violencia ocurrida, en caso de ser NULL se
 #' usan todos los tipos de violencia
 #'
@@ -52,16 +54,36 @@ CasosNormalizadosRepublica <- function(datos_violencia, poblacion_inegi_2015, fi
 #' @importFrom rlang .data
 #'
 #' @examples
+#' TasaPromedioMensual(datos_violencia, poblacion_inegi_2015)
 #' TasaPromedioMensual(datos_violencia, poblacion_inegi_2015, filtro.tipo = "Violencia familiar")
-TasaPromedioMensual <- function(datos_violencia, poblacion_inegi_2015, filtro.tipo = NULL) {
+#' TasaPromedioMensual(
+#'   datos_violencia, poblacion_inegi_2015, entidad = "Querétaro", filtro.tipo = "Violencia familiar"
+#' )
+#' TasaPromedioMensual(
+#'   datos_violencia, poblacion_inegi_2015, entidad = "Todos", filtro.tipo = "Violencia familiar"
+#' )
+TasaPromedioMensual <- function(datos_violencia, poblacion_inegi_2015, entidad = NULL, filtro.tipo = NULL) {
   meses_sin_datos <- DefinirMesesSinDatos(datos_violencia)
-  if(!is.null(filtro.tipo)) {
-    violencia_normalizada <- datos_violencia %>%
+  violencia_normalizada <- datos_violencia
+  if(!is.null(filtro.tipo) & !is.null(entidad)) {
+    if(entidad == "Todos") {
+      violencia_normalizada <- violencia_normalizada %>%
+        dplyr::mutate(Entidad = "Todos")
+    }
+    violencia_normalizada <- violencia_normalizada %>%
+      dplyr::filter(.data$Tipo == filtro.tipo, .data$Entidad == entidad)
+  } else if(!is.null(filtro.tipo) & is.null(entidad)) {
+    violencia_normalizada <- violencia_normalizada %>%
       dplyr::filter(.data$Tipo == filtro.tipo)
-  } else {
-    violencia_normalizada <- datos_violencia
+  } else if(is.null(filtro.tipo) & !is.null(entidad)) {
+    if(entidad == "Todos") {
+      violencia_normalizada <- violencia_normalizada %>%
+        dplyr::mutate(Entidad = "Todos")
+    }
+    violencia_normalizada <- violencia_normalizada %>%
+      dplyr::filter(.data$Entidad == entidad)
   }
-  violencia_normalizada %>%
+  violencia_normalizada <- violencia_normalizada %>%
     dplyr::filter(!lubridate::floor_date(.data$fecha, unit = "month") %in% meses_sin_datos) %>%
     dplyr::group_by(.data$Entidad, anyo = lubridate::year(.data$fecha), mes = lubridate::month(.data$fecha)) %>%
     dplyr::summarise(casos_estado_mes = sum(.data$ocurrencia)) %>%
@@ -69,7 +91,18 @@ TasaPromedioMensual <- function(datos_violencia, poblacion_inegi_2015, filtro.ti
     dplyr::group_by(.data$Entidad, .data$anyo) %>%
     dplyr::summarise(casos_promedio_mes = sum(.data$casos_estado_mes) / dplyr::n_distinct(.data$mes)) %>%
     dplyr::ungroup() %>%
-    dplyr::mutate(Entidad = as.character(.data$Entidad)) %>%
+    dplyr::mutate(Entidad = as.character(.data$Entidad))
+  if (!is.null(entidad)) {
+    if(entidad == "Todos") {
+      violencia_normalizada <- violencia_normalizada %>%
+        dplyr::mutate(
+          poblacion_total = sum(poblacion_inegi_2015$Habitantes2015),
+          tasa_100k = .data$casos_promedio_mes / sum(poblacion_inegi_2015$Habitantes2015) * 100000
+        )
+      return(violencia_normalizada)
+    }
+  }
+  violencia_normalizada %>%
     AgregaTasaPoblacional(poblacion_inegi_2015, columna_a_tasa = "casos_promedio_mes")
 }
 
