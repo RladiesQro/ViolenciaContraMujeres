@@ -124,14 +124,21 @@ ggplot(violencia_mes_todo) +
   scale_y_continuous(labels = scales::percent) +
   scale_fill_viridis_d(direction = -1) +
   labs(
-    title = "Violencia Familiar Meses comparables",
-    subtitle = "Porcentaje de del total de casos reportados por mes y año en toda la Republica",
+    title = "Violencia Familiar contra la Mujer Meses comparables",
+    subtitle = "Porcentaje de del total de casos reportados por mes y año en todo México",
     x = "",
     y = "Porcentaje del total de casos",
     fill = ""
   ) +
   theme_ipsum() +
-  theme(axis.text.x = element_text(angle = 90), legend.position="bottom")
+  theme(
+      axis.title.y = element_text(size = 18),
+      axis.text.y = element_text(size = 12),
+      axis.text.x = element_text(size = 12, angle = 90),
+      legend.text = element_text(size = 15),
+      strip.text.x = element_text(size = 14),
+      legend.position="bottom"
+  )
 ```
 
 ### Querétaro
@@ -150,14 +157,21 @@ ggplot(violencia_mes_entidad) +
   scale_y_continuous(labels = scales::percent) +
   scale_fill_viridis_d(direction = -1) +
   labs(
-    title = "Violencia Familiar Meses comparables",
+    title = "Violencia Familiar contra la Mujer Meses comparables",
     subtitle = "Porcentaje de del total de casos reportados por mes y año en Querétaro",
     x = "",
     y = "Porcentaje del total de casos",
     fill = ""
   ) +
   theme_ipsum() +
-  theme(axis.text.x = element_text(angle = 90), legend.position="bottom")
+  theme(
+      axis.title.y = element_text(size = 18),
+      axis.text.y = element_text(size = 12),
+      axis.text.x = element_text(size = 12, angle = 90),
+      legend.text = element_text(size = 15),
+      strip.text.x = element_text(size = 14),
+      legend.position="bottom"
+  )
 ```
 
 ## Comparando los porcentajes por año
@@ -171,18 +185,25 @@ violencia_mes_todo<- violencia_mes_todo %>%
   filter(Tipo == "Violencia familiar")
 
 ggplot(violencia_mes_todo) +
-  geom_line(aes(x= mes, y = proporcion_tipo, color = factor(anyo), group = factor(anyo))) +
-  geom_point(aes(x= mes, y = proporcion_tipo, color = factor(anyo), group = factor(anyo))) +
+  geom_line(aes(x= mes, y = proporcion_tipo, color = factor(anyo), group = factor(anyo)), size = 1) +
+  geom_point(aes(x= mes, y = proporcion_tipo, color = factor(anyo), group = factor(anyo)), size = 3) +
   scale_y_continuous(labels = scales::percent) +
   labs(
-    title = "Porcentaje Violencia Familiar",
-    subtitle = "Comparativa meses con datos en toda la republica",
+    title = "Porcentaje Violencia Familiar contra la Mujer",
+    subtitle = "Comparativa meses con datos en todo México",
     x = "",
     y = "Porcentaje del total de casos",
     color = ""
   ) +
   scale_color_viridis_d(direction = -1) +
-  theme_ipsum()
+  theme_ipsum() +
+  theme(
+      axis.title.y = element_text(size = 18),
+      axis.text.y = element_text(size = 11),
+      axis.text.x = element_text(size = 11),
+      legend.text = element_text(size = 14),
+      strip.text.y = element_text(size = 18)
+  )
 ```
 
 ### Querétaro
@@ -192,18 +213,25 @@ violencia_mes_entidad <- violencia_mes_entidad %>%
   filter(Tipo == "Violencia familiar")
 
 ggplot(violencia_mes_entidad) +
-  geom_line(aes(x= mes, y = proporcion_tipo, color = factor(anyo), group = factor(anyo))) +
-  geom_point(aes(x= mes, y = proporcion_tipo, color = factor(anyo), group = factor(anyo))) +
+  geom_line(aes(x= mes, y = proporcion_tipo, color = factor(anyo), group = factor(anyo)), size = 1) +
+  geom_point(aes(x= mes, y = proporcion_tipo, color = factor(anyo), group = factor(anyo)), size = 3) +
   scale_y_continuous(labels = scales::percent) +
   labs(
-    title = "Porcentaje Violencia Familiar",
+    title = "Porcentaje Violencia Familiar contra la Mujer",
     subtitle = "Comparativa meses con datos en Querétaro",
     x = "",
     y = "Porcentaje del total de casos",
     color = ""
   ) +
   scale_color_viridis_d(direction = -1) +
-  theme_ipsum()
+  theme_ipsum() +
+  theme(
+      axis.title.y = element_text(size = 18),
+      axis.text.y = element_text(size = 11),
+      axis.text.x = element_text(size = 11),
+      legend.text = element_text(size = 14),
+      strip.text.y = element_text(size = 18)
+  )
 ```
 
 ### Varios tipos de violencia
@@ -212,32 +240,32 @@ Podemos ademas comparar varios tipos de violencia
 
 ```{r fig.height=7}
 violencia_mes_entidad_varios <- DatosMesEstadoAgrupados(
-  datos_violencia, entidad = "Todas", resaltar.tipo = c(
-    "Violencia familiar", "Abuso sexual", "Violencia de género en todas sus modalidades distinta a la violencia familiar"
-  )
+  datos_violencia, entidad = "Todas", resaltar.tipo = c("Violencia familiar", "Abuso sexual")
 )
 violencia_mes_entidad_varios <- violencia_mes_entidad_varios %>% 
-  filter(Tipo !=  "Otros tipos de Violencia") %>% 
-  mutate(Tipo = ifelse(
-    Tipo == "Violencia de género en todas sus modalidades distinta a la violencia familiar",
-    "Modalidades distintas",
-    Tipo
-  ))
+  filter(Tipo !=  "Otros tipos de Violencia")
 
 ggplot(violencia_mes_entidad_varios) +
-  geom_line(aes(x= mes, y = proporcion_tipo, color = factor(anyo), group = factor(anyo))) +
-  geom_point(aes(x= mes, y = proporcion_tipo, color = factor(anyo), group = factor(anyo))) +
+  geom_line(aes(x= mes, y = proporcion_tipo, color = factor(anyo), group = factor(anyo)), size = 1) +
+  geom_point(aes(x= mes, y = proporcion_tipo, color = factor(anyo), group = factor(anyo)), size = 3) +
   facet_grid(Tipo ~ ., scales = "free_y") +
   scale_y_continuous(labels = scales::percent) +
   labs(
-    title = "Porcentaje Violencia Familiar, Acoso Sexual y modalidades distintas a violencia familiar",
-    subtitle = "Comparativa meses con datos en toda la republica",
+    title = "Porcentaje Violencia Familiar y Acoso Sexual contra la Mujer",
+    subtitle = "Comparativa meses con datos en todo México",
     x = "",
     y = "Porcentaje del total de casos",
     color = ""
   ) +
   scale_color_viridis_d(direction = -1) +
-  theme_ipsum()
+  theme_ipsum() +
+  theme(
+      axis.title.y = element_text(size = 18),
+      axis.text.y = element_text(size = 11),
+      axis.text.x = element_text(size = 11),
+      legend.text = element_text(size = 14),
+      strip.text.y = element_text(size = 18)
+  )
 ```
 
 ## Ranking de tipo de violencia
@@ -289,7 +317,12 @@ ggplot(data = ranking_tipo_violencia_republica, aes(anyo, rank, color = Tipo, gr
     panel.grid.minor.y = element_blank(),
     panel.grid.minor.x = element_blank(),
     panel.grid.major.x = element_line(color = 'grey60', linetype = 'dashed')) +
-    labs(x = "Año", y = "Rank", title = "Posición Violencia Familiar", subtitle = "Top 5 tipos de violencia en toda la Republica")
+    labs(
+      title = "Clasificación Violencia Familiar contra la Mujer",
+      subtitle = "Top 5 tipos de violencia en todo México",
+      x = "Año",
+      y = "Rank"
+    )
 ```
 
 ### Querétaro
@@ -338,5 +371,10 @@ ggplot(data = ranking_tipo_violencia, aes(anyo, rank, color = Tipo, group = Tipo
     panel.grid.minor.y = element_blank(),
     panel.grid.minor.x = element_blank(),
     panel.grid.major.x = element_line(color = 'grey60', linetype = 'dashed')) +
-    labs(x = "Año", y = "Rank", title = "Posición Violencia Familiar", subtitle = "Top 5 tipos de violencia en Querétaro")
+    labs(
+      title = "Clasificación Violencia Familiar contra la Mujer",
+      subtitle = "Top 5 tipos de violencia en Querétaro",
+      x = "Año", 
+      y = "Rank"
+    )
 ```
