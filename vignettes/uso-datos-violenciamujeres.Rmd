@@ -100,3 +100,62 @@ ggplot(datos_estado_poligonos) +
 ```
 
 Los datos aún tienen mucha información seguro **encontraras algo mas.**
+
+Se puede calcular el porcentaje por estado o de toda la republica, para los meses comparables de cada año. La función 
+`DatosMesEstadoAgrupados()` permite hacer este cálculo para toda la republica colocalndo `"Todas"` como entidad.
+Ademas permite resaltar varios *tipos* de violencia al colocarlos en un vector para el argumento `resaltar.tipo`.
+
+```{r}
+violencia_mes_entidad <- DatosMesEstadoAgrupados(
+  datos_violencia, entidad = "Todas", resaltar.tipo = c("Violencia familiar")
+)
+violencia_mes_entidad
+```
+
+Estos datos graficados 
+
+```{r}
+ggplot(violencia_mes_entidad) +
+  geom_col(aes(x= mes, y = proporcion_tipo, fill = Tipo)) +
+  facet_grid(. ~ anyo) +
+  scale_y_continuous(labels = scales::percent) +
+  scale_fill_viridis_d(direction = -1) +
+  labs(x = "", y = "Porcentaje del total de casos", fill = "") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90))
+```
+
+Otra representación sería:
+
+```{r}
+violencia_mes_entidad_fix <- violencia_mes_entidad %>% 
+  filter(Tipo == "Violencia familiar")
+
+ggplot(violencia_mes_entidad_fix) +
+  geom_line(aes(x= mes, y = proporcion_tipo, color = factor(anyo), group = factor(anyo))) +
+  geom_point(aes(x= mes, y = proporcion_tipo, color = factor(anyo), group = factor(anyo))) +
+  scale_y_continuous(labels = scales::percent) +
+  labs(x = "", y = "Porcentaje del total de casos", color = "") +
+  scale_color_viridis_d(direction = -1) +
+  theme_minimal()
+```
+
+Podemos ademas comparar varios tipos de violencia
+
+```{r}
+violencia_mes_entidad_varios <- DatosMesEstadoAgrupados(
+  datos_violencia, entidad = "Todas", resaltar.tipo = c("Violencia familiar", "Abuso sexual")
+)
+violencia_mes_entidad_varios <- violencia_mes_entidad_varios %>% 
+  filter(Tipo !=  "Otros tipos de Violencia")
+
+ggplot(violencia_mes_entidad_varios) +
+  geom_line(aes(x= mes, y = proporcion_tipo, color = factor(anyo), group = factor(anyo))) +
+  geom_point(aes(x= mes, y = proporcion_tipo, color = factor(anyo), group = factor(anyo))) +
+  facet_grid(Tipo ~ ., scales = "free_y") +
+  scale_y_continuous(labels = scales::percent) +
+  labs(x = "", y = "Porcentaje del total de casos", color = "") +
+  scale_color_viridis_d(direction = -1) +
+  theme_minimal()
+```
+

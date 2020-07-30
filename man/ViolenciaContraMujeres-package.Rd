@@ -6,9 +6,9 @@
 \alias{ViolenciaContraMujeres-package}
 \title{ViolenciaContraMujeres: Aplicación Shiny para explorar los datos de violencia en México}
 \description{
-Este paquete permite explorar los datos de violencia en México.
-    Provee de acceso al dataset de Violencia en México hasta los primeros meses del 2020.
-    Permite la ejecución de una applicación Shiny donde se muestran algunas representaciones  gráficas.
+Este paquete permite explorar los datos de violencia en México, ademas provee de acceso al dataset 
+    de Violencia en México hasta los primeros meses del 2020. Permite la ejecución de una applicación Shiny
+    donde se muestran algunas representaciones  gráficas.
     Incluye los conjuntos de datos
     \itemize{
     \item{\code{\link{datos_violencia}}}
