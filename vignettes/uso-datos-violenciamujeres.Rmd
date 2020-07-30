@@ -1,8 +1,8 @@
 ---
-title: "Uso de datos de violencia contra Mujeres"
+title: "Violencia contra las Mujeres"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Uso de datos de violencia contra Mujeres}
+  %\VignetteIndexEntry{ViolenciaContraMujeres}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
