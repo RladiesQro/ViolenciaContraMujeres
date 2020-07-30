@@ -1,6 +1,6 @@
 Package: ViolenciaContraMujeres
 Title: Aplicación Shiny para explorar los datos de violencia en México
-Version: 0.2.0
+Version: 0.3.0
 Authors@R: 
     person(given = "First",
            family = "Last",

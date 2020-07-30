@@ -1,3 +1,8 @@
+# ViolenciaContraMujeres 0.3.0
+
+Se agrega la función `RankingTipoViolencia()` para el cálculo de rankin por plaza por año del tipo de violencia contra
+la mujer.
+
 # ViolenciaContraMujeres 0.2.0
 
 Se agrega la función `DatosMesEstadoAgrupados()` para obtener el porcentaje de casos por tipo de violencia en meses 
