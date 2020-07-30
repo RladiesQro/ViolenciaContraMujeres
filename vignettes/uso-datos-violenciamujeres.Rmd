@@ -20,6 +20,7 @@ library(ggplot2)
 library(lubridate)
 library(sf)
 library(ViolenciaContraMujeres)
+library(hrbrthemes)
 ```
 
 ## Datos de violencia contra la Mujer
@@ -99,63 +100,243 @@ ggplot(datos_estado_poligonos) +
   theme_minimal()
 ```
 
-Los datos aún tienen mucha información seguro **encontraras algo mas.**
+## Porcentaje de casos de **Violencia Familiar**
+
 
 Se puede calcular el porcentaje por estado o de toda la republica, para los meses comparables de cada año. La función 
 `DatosMesEstadoAgrupados()` permite hacer este cálculo para toda la republica colocalndo `"Todas"` como entidad.
 Ademas permite resaltar varios *tipos* de violencia al colocarlos en un vector para el argumento `resaltar.tipo`.
 
+### Toda la Republica
+
+```{r}
+violencia_mes_todo <- DatosMesEstadoAgrupados(
+  datos_violencia, entidad = "Todas", resaltar.tipo = c("Violencia familiar")
+)
+violencia_mes_todo
+```
+
+
+```{r fig.width=12}
+ggplot(violencia_mes_todo) +
+  geom_col(aes(x= mes, y = proporcion_tipo, fill = Tipo)) +
+  facet_grid(. ~ anyo) +
+  scale_y_continuous(labels = scales::percent) +
+  scale_fill_viridis_d(direction = -1) +
+  labs(
+    title = "Violencia Familiar Meses comparables",
+    subtitle = "Porcentaje de del total de casos reportados por mes y año en toda la Republica",
+    x = "",
+    y = "Porcentaje del total de casos",
+    fill = ""
+  ) +
+  theme_ipsum() +
+  theme(axis.text.x = element_text(angle = 90), legend.position="bottom")
+```
+
+### Querétaro
+
 ```{r}
 violencia_mes_entidad <- DatosMesEstadoAgrupados(
-  datos_violencia, entidad = "Todas", resaltar.tipo = c("Violencia familiar")
+  datos_violencia, entidad = "Querétaro", resaltar.tipo = c("Violencia familiar")
 )
 violencia_mes_entidad
 ```
 
-Estos datos graficados 
-
-```{r}
+```{r fig.width=12}
 ggplot(violencia_mes_entidad) +
   geom_col(aes(x= mes, y = proporcion_tipo, fill = Tipo)) +
   facet_grid(. ~ anyo) +
   scale_y_continuous(labels = scales::percent) +
   scale_fill_viridis_d(direction = -1) +
-  labs(x = "", y = "Porcentaje del total de casos", fill = "") +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 90))
+  labs(
+    title = "Violencia Familiar Meses comparables",
+    subtitle = "Porcentaje de del total de casos reportados por mes y año en Querétaro",
+    x = "",
+    y = "Porcentaje del total de casos",
+    fill = ""
+  ) +
+  theme_ipsum() +
+  theme(axis.text.x = element_text(angle = 90), legend.position="bottom")
 ```
+
+## Comparando los porcentajes por año
+
+### Toda la Republica
 
 Otra representación sería:
 
 ```{r}
-violencia_mes_entidad_fix <- violencia_mes_entidad %>% 
+violencia_mes_todo<- violencia_mes_todo %>% 
   filter(Tipo == "Violencia familiar")
 
-ggplot(violencia_mes_entidad_fix) +
+ggplot(violencia_mes_todo) +
   geom_line(aes(x= mes, y = proporcion_tipo, color = factor(anyo), group = factor(anyo))) +
   geom_point(aes(x= mes, y = proporcion_tipo, color = factor(anyo), group = factor(anyo))) +
   scale_y_continuous(labels = scales::percent) +
-  labs(x = "", y = "Porcentaje del total de casos", color = "") +
+  labs(
+    title = "Porcentaje Violencia Familiar",
+    subtitle = "Comparativa meses con datos en toda la republica",
+    x = "",
+    y = "Porcentaje del total de casos",
+    color = ""
+  ) +
   scale_color_viridis_d(direction = -1) +
-  theme_minimal()
+  theme_ipsum()
 ```
+
+### Querétaro
+
+```{r}
+violencia_mes_entidad <- violencia_mes_entidad %>% 
+  filter(Tipo == "Violencia familiar")
+
+ggplot(violencia_mes_entidad) +
+  geom_line(aes(x= mes, y = proporcion_tipo, color = factor(anyo), group = factor(anyo))) +
+  geom_point(aes(x= mes, y = proporcion_tipo, color = factor(anyo), group = factor(anyo))) +
+  scale_y_continuous(labels = scales::percent) +
+  labs(
+    title = "Porcentaje Violencia Familiar",
+    subtitle = "Comparativa meses con datos en Querétaro",
+    x = "",
+    y = "Porcentaje del total de casos",
+    color = ""
+  ) +
+  scale_color_viridis_d(direction = -1) +
+  theme_ipsum()
+```
+
+### Varios tipos de violencia
 
 Podemos ademas comparar varios tipos de violencia
 
-```{r}
+```{r fig.height=7}
 violencia_mes_entidad_varios <- DatosMesEstadoAgrupados(
-  datos_violencia, entidad = "Todas", resaltar.tipo = c("Violencia familiar", "Abuso sexual")
+  datos_violencia, entidad = "Todas", resaltar.tipo = c(
+    "Violencia familiar", "Abuso sexual", "Violencia de género en todas sus modalidades distinta a la violencia familiar"
+  )
 )
 violencia_mes_entidad_varios <- violencia_mes_entidad_varios %>% 
-  filter(Tipo !=  "Otros tipos de Violencia")
+  filter(Tipo !=  "Otros tipos de Violencia") %>% 
+  mutate(Tipo = ifelse(
+    Tipo == "Violencia de género en todas sus modalidades distinta a la violencia familiar",
+    "Modalidades distintas",
+    Tipo
+  ))
 
 ggplot(violencia_mes_entidad_varios) +
   geom_line(aes(x= mes, y = proporcion_tipo, color = factor(anyo), group = factor(anyo))) +
   geom_point(aes(x= mes, y = proporcion_tipo, color = factor(anyo), group = factor(anyo))) +
   facet_grid(Tipo ~ ., scales = "free_y") +
   scale_y_continuous(labels = scales::percent) +
-  labs(x = "", y = "Porcentaje del total de casos", color = "") +
+  labs(
+    title = "Porcentaje Violencia Familiar, Acoso Sexual y modalidades distintas a violencia familiar",
+    subtitle = "Comparativa meses con datos en toda la republica",
+    x = "",
+    y = "Porcentaje del total de casos",
+    color = ""
+  ) +
   scale_color_viridis_d(direction = -1) +
-  theme_minimal()
+  theme_ipsum()
 ```
 
+## Ranking de tipo de violencia
+
+### Republica Mexicana
+
+```{r}
+ranking_tipo_violencia_republica <- RankingTipoViolencia(datos_violencia, entidad = NULL, numero_posiciones = 5)
+ranking_tipo_violencia_republica
+```
+
+
+```{r fig.width=10}
+violencia_tags_inicio <- ranking_tipo_violencia_republica %>%
+  ungroup() %>%
+  filter(anyo == min(anyo)) %>%
+  mutate(anyo = as.numeric(anyo) - 0.25)
+violencia_tags_final <- ranking_tipo_violencia_republica %>%
+  ungroup() %>%
+  filter(anyo == max(anyo)) %>%
+  mutate(anyo = as.numeric(anyo) + 0.25)
+
+colors <- c(
+  "Robo" = "#B1B8BE",
+  "Violencia familiar" = "#DE4212",
+  "Lesiones" = "#B1B8BE",
+  "Otros delitos del Fuero Común" = "#B1B8BE",
+  "Daño a la propiedad" = "#B1B8BE",
+  "Fraude" = "#B1B8BE" ,
+  "Amenazas" = "#B1B8BE"
+)
+
+ggplot(data = ranking_tipo_violencia_republica, aes(anyo, rank, color = Tipo, group = Tipo, label = Tipo)) +
+  geom_line(size = 1.7, alpha = 0.25) +
+  geom_point(size = 4, alpha = 0.25) +
+  geom_point(size = 1.75, color = "white") +
+  geom_text(data = violencia_tags_inicio, x = 2013.5, size = 4) +
+  geom_text(data = violencia_tags_final, x = 2021.3, size = 4) +
+  scale_y_reverse(breaks = 1:5) +
+  scale_x_continuous(
+    breaks = seq(min(ranking_tipo_violencia_republica$anyo), max(ranking_tipo_violencia_republica$anyo)),
+    limits = c(min(ranking_tipo_violencia_republica$anyo) - 2.3, max(ranking_tipo_violencia_republica$anyo) + 2)
+  ) +
+  scale_color_manual(values = colors) +
+  theme_ipsum() +
+  theme(
+    legend.position = "",
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_line(color = 'grey60', linetype = 'dashed')) +
+    labs(x = "Año", y = "Rank", title = "Posición Violencia Familiar", subtitle = "Top 5 tipos de violencia en toda la Republica")
+```
+
+### Querétaro
+
+```{r}
+ranking_tipo_violencia <- RankingTipoViolencia(datos_violencia, entidad = "Querétaro", numero_posiciones = 5)
+ranking_tipo_violencia
+```
+
+```{r fig.width=10}
+violencia_tags_inicio <- ranking_tipo_violencia %>%
+  ungroup() %>%
+  filter(anyo == min(anyo)) %>%
+  mutate(anyo = as.numeric(anyo) - 0.25)
+violencia_tags_final <- ranking_tipo_violencia %>%
+  ungroup() %>%
+  filter(anyo == max(anyo)) %>%
+  mutate(anyo = as.numeric(anyo) + 0.25)
+
+colors <- c(
+  "Robo" = "#B1B8BE",
+  "Violencia familiar" = "#DE4212",
+  "Lesiones" = "#B1B8BE",
+  "Otros delitos del Fuero Común" = "#B1B8BE",
+  "Daño a la propiedad" = "#B1B8BE",
+  "Fraude" = "#B1B8BE" ,
+  "Amenazas" = "#B1B8BE"
+)
+
+ggplot(data = ranking_tipo_violencia, aes(anyo, rank, color = Tipo, group = Tipo, label = Tipo)) +
+  geom_line(size = 1.7, alpha = 0.25) +
+  geom_point(size = 4, alpha = 0.25) +
+  geom_point(size = 1.75, color = "white") +
+  geom_text(data = violencia_tags_inicio, x = 2013.5, size = 4) +
+  geom_text(data = violencia_tags_final, x = 2021.3, size = 4) +
+  scale_y_reverse(breaks = 1:5) +
+  scale_x_continuous(
+    breaks = seq(min(ranking_tipo_violencia$anyo), max(ranking_tipo_violencia$anyo)),
+    limits = c(min(ranking_tipo_violencia$anyo) - 2.3, max(ranking_tipo_violencia$anyo) + 2)
+  ) +
+  scale_color_manual(values = colors) +
+  theme_ipsum() +
+  theme(
+    legend.position = "",
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_line(color = 'grey60', linetype = 'dashed')) +
+    labs(x = "Año", y = "Rank", title = "Posición Violencia Familiar", subtitle = "Top 5 tipos de violencia en Querétaro")
+```

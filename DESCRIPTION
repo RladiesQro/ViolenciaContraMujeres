@@ -25,6 +25,7 @@ Description: Este paquete permite explorar los datos de violencia en México, ad
     \item{\code{\link{AgregaPoligonos}}}{Incluye una columna con los poligonos de cada estado}
     \item{\code{\link{AgregaTasaPoblacional}}}{Incluye una columna con la tasa poblacional por cada 100mil habitantes y los habitantes totales}
     \item{\code{\link{DatosMesEstadoAgrupados}}}{Calcula porcentaje por mes comparable, entidad y tipo de violencia}
+    \item{\code{\link{RankingTipoViolencia}}}{Ranking por tipo de violencia al año}
     }
     Por último para poder ejecutar la shiny app se puede ejecutar la función \code{\link{ejecutaShinyApp}}
 License: MIT + file LICENSE
@@ -49,7 +50,8 @@ Imports:
     shinydashboard,
     shinyWidgets,
     stringr,
-    ggplot2
+    ggplot2,
+    hrbrthemes
 Depends: R (>= 2.10)
 Suggests: 
     testthat,

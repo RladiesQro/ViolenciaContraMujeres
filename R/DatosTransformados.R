@@ -137,11 +137,16 @@ ComparaMesesConDatos <- function(datos_violencia, poblacion_inegi_2015, filtro.t
 #' DatosMesEstadoAgrupados(
 #'   datos_violencia,  entidad = "Todas", resaltar.tipo = c("Violencia familiar", "Abuso sexual")
 #' )
-DatosMesEstadoAgrupados <- function(datos_violencia, entidad = "Todas", resaltar.tipo = NULL) {
+DatosMesEstadoAgrupados <- function(datos_violencia, entidad = NULL, resaltar.tipo = NULL) {
   violencia_mes_entidad <- datos_violencia
-  if (entidad == "Todas") {
+  if (!is.null(entidad)) {
+    if (entidad == "Todas") {
     violencia_mes_entidad <- violencia_mes_entidad %>%
       dplyr::mutate(Entidad = "Todas")
+    } else {
+      violencia_mes_entidad <- violencia_mes_entidad %>%
+        dplyr::filter(.data$Entidad == entidad)
+    }
   }
   if (!is.null(resaltar.tipo)){
     violencia_mes_entidad <- violencia_mes_entidad %>%
@@ -156,4 +161,41 @@ DatosMesEstadoAgrupados <- function(datos_violencia, entidad = "Todas", resaltar
     dplyr::group_by(.data$Entidad, .data$anyo, .data$mes) %>%
     dplyr::mutate(casos_registrados = sum(.data$casos_tipo)) %>%
     dplyr::mutate(proporcion_tipo = .data$casos_tipo / .data$casos_registrados)
+}
+
+
+#' Calculate ranking de tipo de violencia contra la mujer
+#'
+#' Calcula la posición de cada tipo de violencia contra la mujer con base en la cuenta total de
+#' casos por año por entidad, en caso de colocar a NULL la entidad o no declarar el parámetro se calcula
+#' a total toda la republica mexicana.
+#'
+#' @param datos_violencia Datos de casos de violencia contra la mujer
+#' @param entidad Entidad para filtrar el dataset, en caso de no declararlo o ponerlo a nul se calcula a todo México
+#' @param numero_posiciones Posiciones que se muestran dentro del ranking, por año y tipo de violencia.
+#'
+#' @return Conjunto de datos con la columna, Tipo de caso, año, número de casos y psoición dentro del rank
+#' @export
+#'
+#' @importFrom rlang .data
+#'
+#' @examples  RankingTipoViolencia(datos_violencia, entidad = "Querétaro", numero_posiciones = 5)
+RankingTipoViolencia <- function(datos_violencia, entidad = NULL, numero_posiciones = NULL) {
+  if(!is.null(entidad)) {
+    ranking_tipo_violencia <- datos_violencia %>%
+      dplyr::filter(.data$Entidad == entidad)
+  } else {
+    ranking_tipo_violencia <- datos_violencia
+  }
+  ranking_tipo_violencia <- ranking_tipo_violencia %>%
+    dplyr::group_by(.data$Tipo, anyo = lubridate::year(.data$fecha)) %>%
+    dplyr::summarise(numero_casos = sum(.data$ocurrencia)) %>%
+    dplyr::arrange(.data$anyo, dplyr::desc(.data$numero_casos)) %>%
+    dplyr::group_by(.data$anyo)
+  if (!is.null(numero_posiciones)) {
+    ranking_tipo_violencia <- ranking_tipo_violencia %>%
+      dplyr::top_n(numero_posiciones)
+  }
+  ranking_tipo_violencia %>%
+    dplyr::mutate(rank = dplyr::row_number())
 }

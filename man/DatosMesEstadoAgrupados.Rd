@@ -4,11 +4,7 @@
 \alias{DatosMesEstadoAgrupados}
 \title{Datos de Meses por Estado Agrupados popr tipo}
 \usage{
-DatosMesEstadoAgrupados(
-  datos_violencia,
-  entidad = "Todas",
-  resaltar.tipo = NULL
-)
+DatosMesEstadoAgrupados(datos_violencia, entidad = NULL, resaltar.tipo = NULL)
 }
 \arguments{
 \item{datos_violencia}{Datos de violencia contra la mujer}
