@@ -206,6 +206,7 @@ DatosMesEstadoAgrupados <- function(datos_violencia, entidad = NULL, resaltar.ti
 #' @param datos_violencia Datos de casos de violencia contra la mujer
 #' @param entidad Entidad para filtrar el dataset, en caso de no declararlo o ponerlo a nul se calcula a todo México
 #' @param numero_posiciones Posiciones que se muestran dentro del ranking, por año y tipo de violencia.
+#' @param resaltar_tipo Determina el tipo de violencia contra la mujer que se resaltará con un color en el plot
 #'
 #' @return Conjunto de datos con la columna, Tipo de caso, año, número de casos y psoición dentro del rank
 #' @export
@@ -213,7 +214,7 @@ DatosMesEstadoAgrupados <- function(datos_violencia, entidad = NULL, resaltar.ti
 #' @importFrom rlang .data
 #'
 #' @examples  RankingTipoViolencia(datos_violencia, entidad = "Querétaro", numero_posiciones = 5)
-RankingTipoViolencia <- function(datos_violencia, entidad = NULL, numero_posiciones = NULL) {
+RankingTipoViolencia <- function(datos_violencia, entidad = NULL, numero_posiciones = NULL, resaltar_tipo = "Violencia familiar") {
   if(!is.null(entidad)) {
     ranking_tipo_violencia <- datos_violencia %>%
       dplyr::filter(.data$Entidad == entidad)
@@ -229,6 +230,9 @@ RankingTipoViolencia <- function(datos_violencia, entidad = NULL, numero_posicio
     ranking_tipo_violencia <- ranking_tipo_violencia %>%
       dplyr::top_n(numero_posiciones)
   }
-  ranking_tipo_violencia %>%
+  ranking_tipo_violencia <- ranking_tipo_violencia %>%
     dplyr::mutate(rank = dplyr::row_number())
+  .rankingPlotExtraInfo(
+    ranking_tipo_violencia, ajuste_anyo =  0.25, resaltar_tipo
+  )
 }

@@ -101,3 +101,39 @@ AgregaTasaPoblacional <- function(resumen_datos_estatal, poblacion_inegi_2015, c
     dplyr::mutate(tasa_100k = (get(columna_a_tasa) / .data$Habitantes2015) * 100000) %>%
     dplyr::rename(poblacion_total = .data$Habitantes2015)
 }
+
+#' @importFrom rlang .data
+.rankingPlotExtraInfo <- function(ranking_violencia, ajuste_anyo =  0.25, resaltar_tipo = NULL) {
+  ranking_violencia <- ranking_violencia %>%
+    dplyr::mutate(Tipo = ifelse(
+      .data$Tipo == "Otros delitos del Fuero Com\\u00fan",
+      "Otros delitos \n del Fuero Com\\u00fan",
+      as.character(.data$Tipo)
+    ))
+
+  violencia_tags_inicio <- ranking_violencia %>%
+    dplyr::ungroup() %>%
+    dplyr::filter(.data$anyo == min(.data$anyo)) %>%
+    dplyr::mutate(anyo = as.numeric(.data$anyo) - ajuste_anyo)
+
+  violencia_tags_final <- ranking_violencia %>%
+    dplyr::ungroup() %>%
+    dplyr::filter(.data$anyo == max(.data$anyo)) %>%
+    dplyr::mutate(anyo = as.numeric(.data$anyo) + ajuste_anyo)
+
+  color_resalta <- "#DE4212"
+  color_no_resalta <- "#788091"
+
+  tipo_ranking <- unique(ranking_violencia$Tipo)
+  colores <- rep(color_no_resalta, length(tipo_ranking))
+  names(colores) <- tipo_ranking
+  if(!is.null(resaltar_tipo)) {
+    colores[resaltar_tipo] <- color_resalta
+  }
+  return(list(
+    ranking_violencia = ranking_violencia,
+    violencia_tags_inicio = violencia_tags_inicio,
+    violencia_tags_final = violencia_tags_final,
+    colores = colores
+  ))
+}

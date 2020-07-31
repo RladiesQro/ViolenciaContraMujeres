@@ -278,40 +278,29 @@ ranking_tipo_violencia_republica
 ```
 
 
-```{r fig.width=10}
-violencia_tags_inicio <- ranking_tipo_violencia_republica %>%
-  ungroup() %>%
-  filter(anyo == min(anyo)) %>%
-  mutate(anyo = as.numeric(anyo) - 0.25)
-violencia_tags_final <- ranking_tipo_violencia_republica %>%
-  ungroup() %>%
-  filter(anyo == max(anyo)) %>%
-  mutate(anyo = as.numeric(anyo) + 0.25)
-
-colors <- c(
-  "Robo" = "#788091",
-  "Violencia familiar" = "#DE4212",
-  "Lesiones" = "#788091",
-  "Otros delitos del Fuero Común" = "#788091",
-  "Daño a la propiedad" = "#788091",
-  "Fraude" = "#788091" ,
-  "Amenazas" = "#788091"
-)
+```{r fig.width=12}
+violencia_tags_inicio <- ranking_tipo_violencia_republica$violencia_tags_inicio
+violencia_tags_final <- ranking_tipo_violencia_republica$violencia_tags_final
+colores <- ranking_tipo_violencia_republica$colores
+ranking_tipo_violencia_republica <- ranking_tipo_violencia_republica$ranking_violencia
 
 ggplot(data = ranking_tipo_violencia_republica, aes(anyo, rank, color = Tipo, group = Tipo, label = Tipo)) +
-  geom_line(size = 1.7, alpha = 0.5) +
-  geom_point(size = 4, alpha = 0.5) +
-  geom_point(size = 1.75, color = "white") +
-  geom_text(data = violencia_tags_inicio, x = 2013.5, size = 4) +
-  geom_text(data = violencia_tags_final, x = 2021.3, size = 4) +
+  geom_line(size = 3, alpha = 0.5) +
+  geom_point(size = 6, alpha = 0.5) +
+  geom_point(size = 3, color = "white") +
+  geom_text(data = violencia_tags_inicio, x = 2013.5, size = 5) +
+  geom_text(data = violencia_tags_final, x = 2021.5, size = 5) +
   scale_y_reverse(breaks = 1:5) +
   scale_x_continuous(
     breaks = seq(min(ranking_tipo_violencia_republica$anyo), max(ranking_tipo_violencia_republica$anyo)),
     limits = c(min(ranking_tipo_violencia_republica$anyo) - 2.3, max(ranking_tipo_violencia_republica$anyo) + 2)
   ) +
-  scale_color_manual(values = colors) +
+  scale_color_manual(values = colores) +
   theme_ipsum() +
   theme(
+    axis.title.y = element_text(size = 20),
+    axis.text.y = element_text(size = 14),
+      axis.text.x = element_text(size = 14),
     legend.position = "",
     panel.grid.major.y = element_blank(),
     panel.grid.minor.y = element_blank(),
@@ -333,24 +322,10 @@ ranking_tipo_violencia
 ```
 
 ```{r fig.width=10}
-violencia_tags_inicio <- ranking_tipo_violencia %>%
-  ungroup() %>%
-  filter(anyo == min(anyo)) %>%
-  mutate(anyo = as.numeric(anyo) - 0.25)
-violencia_tags_final <- ranking_tipo_violencia %>%
-  ungroup() %>%
-  filter(anyo == max(anyo)) %>%
-  mutate(anyo = as.numeric(anyo) + 0.25)
-
-colors <- c(
-  "Robo" = "#788091",
-  "Violencia familiar" = "#DE4212",
-  "Lesiones" = "#788091",
-  "Otros delitos del Fuero Común" = "#788091",
-  "Daño a la propiedad" = "#788091",
-  "Fraude" = "#788091" ,
-  "Amenazas" = "#788091"
-)
+violencia_tags_inicio <- ranking_tipo_violencia$violencia_tags_inicio
+violencia_tags_final <- ranking_tipo_violencia$violencia_tags_final
+colores <- ranking_tipo_violencia$colores
+ranking_tipo_violencia <- ranking_tipo_violencia$ranking_violencia
 
 ggplot(data = ranking_tipo_violencia, aes(anyo, rank, color = Tipo, group = Tipo, label = Tipo)) +
   geom_line(size = 1.7, alpha = 0.5) +
@@ -363,7 +338,7 @@ ggplot(data = ranking_tipo_violencia, aes(anyo, rank, color = Tipo, group = Tipo
     breaks = seq(min(ranking_tipo_violencia$anyo), max(ranking_tipo_violencia$anyo)),
     limits = c(min(ranking_tipo_violencia$anyo) - 2.3, max(ranking_tipo_violencia$anyo) + 2)
   ) +
-  scale_color_manual(values = colors) +
+  scale_color_manual(values = colores) +
   theme_ipsum() +
   theme(
     legend.position = "",

@@ -1,3 +1,8 @@
+# ViolenciaContraMujeres 0.4.0
+
+Se agrega las nuevas gráficas de comparativa entre años, comparativa de porcentaje y Rank de 
+top 5 violencias contra la mujer
+
 # ViolenciaContraMujeres 0.3.0
 
 Se agrega la función `RankingTipoViolencia()` para el cálculo de rankin por plaza por año del tipo de violencia contra

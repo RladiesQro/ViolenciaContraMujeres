@@ -4,7 +4,17 @@ dashboardPage(
         sidebarMenu(
             menuItem(
                 text = "Violencia en Estados",
-                tabName = "dashboard",
+                tabName = "violencia_estado",
+                icon = icon("dashboard")
+            ),
+            menuItem(
+                text = "Violencia en el Tiempo",
+                tabName = "violencia_tiempo",
+                icon = icon("dashboard")
+            ),
+            menuItem(
+                text = "Violencia Familiar",
+                tabName = "violencia_familiar_tendencia",
                 icon = icon("dashboard")
             )
         )
@@ -14,7 +24,21 @@ dashboardPage(
             tags$link(rel = "stylesheet", type = "text/css", href = "custom.css")
         ),
         tabItems(
-            tabItem(tabName = "dashboard",
+            tabItem(tabName = "violencia_estado",
+                fluidRow(
+                    box(
+                        selectInput(
+                            inputId = "estado",
+                            label = NULL,
+                            choices = rbind("Todos", vector_estados),
+                            multiple = F,
+                            selected = "Querétaro"
+                        ),
+                        title = "Estado seleccionado en mapas:",
+                        width = 12,
+                        collapsible = TRUE
+                    )
+                ),
                 fluidRow(
                     box(
                         leafletOutput("mapa_violencia"),
@@ -27,25 +51,7 @@ dashboardPage(
                         width = 6
                     )
                 ),
-                fluidRow(
-                    box(
-                        pickerInput(
-                            inputId = "estado",
-                            label = NULL,
-                            choices = rbind("Todos", vector_estados),
-                            options = list(
-                                `actions-box` = TRUE,
-                                size = 10,
-                                `selected-text-format` = "count > 5"
-                            ),
-                            multiple = F,
-                            selected = "Querétaro"
-                        ),
-                        title = "Estado seleccionado en mapas:",
-                        width = 12,
-                        collapsible = TRUE
-                    )
-                ),
+
                 fluidRow(
                     box(plotlyOutput("violencia_estatal"), title = "Violencia contra la mujer en estados", width = 6),
                     box(
@@ -59,23 +65,99 @@ dashboardPage(
                         fluidRow(
                             column(
                                 width = 12,
-                                selectInput(
-                                    inputId = "estado_unico",
-                                    label = NULL,
-                                    choices = c("Todos", vector_estados),
-                                    multiple = FALSE,
-                                    selected = "Querétaro"
-                                )
-                            )
-                        ),
-                        fluidRow(
-                            column(
-                                width = 12,
                                 plotlyOutput("violencia_familiar_mes_valido")
                             )
                         ),
                         title = HTML("Violencia <b>Familiar</b> contra la mujer para los meses con datos"),
                         width = 12
+                    )
+                )
+            ),
+            tabItem(
+                tabName = "violencia_tiempo",
+                fluidRow(
+                    box(
+                        selectInput(
+                            inputId = "tipo",
+                            label = NULL,
+                            choices = vector_tipo_violencia,
+                            multiple = F,
+                            selected = "Violencia familiar"
+                        ),
+                        title = "Tipo de Violencia contra la Mujer:",
+                        width = 6,
+                        collapsible = TRUE
+                    ),
+                    box(
+                        selectInput(
+                            inputId = "estado_tiempo",
+                            label = NULL,
+                            choices = vector_estados,
+                            multiple = F,
+                            selected = "Querétaro"
+                        ),
+                        title = "Estado seleccionado:",
+                        width = 6,
+                        collapsible = TRUE
+                    )
+                ),
+                fluidRow(
+                    box(
+                        plotOutput("rank_mexico"),
+                        width = 6
+                    ),
+                    box(
+                        plotOutput("rank_estado"),
+                        width = 6
+                    )
+                ),
+                fluidRow(
+                    box(
+                        plotOutput("anyos_mexico"),
+                        width = 6
+                    ),
+                    box(
+                        plotOutput("anyos_estado"),
+                        width = 6
+                    )
+                )
+            ),
+            tabItem(
+                tabName = "violencia_familiar_tendencia",
+                fluidRow(
+                    box(
+                        selectInput(
+                            inputId = "tipo_vfamiliar",
+                            label = NULL,
+                            choices = vector_tipo_violencia,
+                            multiple = F,
+                            selected = "Violencia familiar"
+                        ),
+                        title = "Tipo de Violencia contra la Mujer:",
+                        width = 6,
+                        collapsible = TRUE
+                    ),
+                    box(
+                        selectInput(
+                            inputId = "estado_vfamiliar",
+                            label = NULL,
+                            choices = vector_estados,
+                            multiple = F,
+                            selected = "Querétaro"
+                        ),
+                        title = "Estado seleccionado:",
+                        width = 6,
+                        collapsible = TRUE
+                    )
+                ),
+                fluidRow(
+                    box(
+                        plotOutput("rank_violencia_mexico"),
+                        width = 6
+                    ),
+                    box(
+                        plotOutput("rank_violencia_estado"),
+                        width = 6
                     )
                 )
             )
