@@ -46,6 +46,10 @@ jobs:
           writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version")
         shell: Rscript {0}
 
+      - name: Install xquartz in MacOs
+        if: runner.os == 'MacOS'
+        run: brew cask install xquartz
+
       - name: Cache R packages
         if: runner.os != 'Windows'
         uses: actions/cache@v1

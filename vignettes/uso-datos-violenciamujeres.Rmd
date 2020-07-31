@@ -289,18 +289,18 @@ violencia_tags_final <- ranking_tipo_violencia_republica %>%
   mutate(anyo = as.numeric(anyo) + 0.25)
 
 colors <- c(
-  "Robo" = "#B1B8BE",
+  "Robo" = "#788091",
   "Violencia familiar" = "#DE4212",
-  "Lesiones" = "#B1B8BE",
-  "Otros delitos del Fuero Común" = "#B1B8BE",
-  "Daño a la propiedad" = "#B1B8BE",
-  "Fraude" = "#B1B8BE" ,
-  "Amenazas" = "#B1B8BE"
+  "Lesiones" = "#788091",
+  "Otros delitos del Fuero Común" = "#788091",
+  "Daño a la propiedad" = "#788091",
+  "Fraude" = "#788091" ,
+  "Amenazas" = "#788091"
 )
 
 ggplot(data = ranking_tipo_violencia_republica, aes(anyo, rank, color = Tipo, group = Tipo, label = Tipo)) +
-  geom_line(size = 1.7, alpha = 0.25) +
-  geom_point(size = 4, alpha = 0.25) +
+  geom_line(size = 1.7, alpha = 0.5) +
+  geom_point(size = 4, alpha = 0.5) +
   geom_point(size = 1.75, color = "white") +
   geom_text(data = violencia_tags_inicio, x = 2013.5, size = 4) +
   geom_text(data = violencia_tags_final, x = 2021.3, size = 4) +
@@ -343,18 +343,18 @@ violencia_tags_final <- ranking_tipo_violencia %>%
   mutate(anyo = as.numeric(anyo) + 0.25)
 
 colors <- c(
-  "Robo" = "#B1B8BE",
+  "Robo" = "#788091",
   "Violencia familiar" = "#DE4212",
-  "Lesiones" = "#B1B8BE",
-  "Otros delitos del Fuero Común" = "#B1B8BE",
-  "Daño a la propiedad" = "#B1B8BE",
-  "Fraude" = "#B1B8BE" ,
-  "Amenazas" = "#B1B8BE"
+  "Lesiones" = "#788091",
+  "Otros delitos del Fuero Común" = "#788091",
+  "Daño a la propiedad" = "#788091",
+  "Fraude" = "#788091" ,
+  "Amenazas" = "#788091"
 )
 
 ggplot(data = ranking_tipo_violencia, aes(anyo, rank, color = Tipo, group = Tipo, label = Tipo)) +
-  geom_line(size = 1.7, alpha = 0.25) +
-  geom_point(size = 4, alpha = 0.25) +
+  geom_line(size = 1.7, alpha = 0.5) +
+  geom_point(size = 4, alpha = 0.5) +
   geom_point(size = 1.75, color = "white") +
   geom_text(data = violencia_tags_inicio, x = 2013.5, size = 4) +
   geom_text(data = violencia_tags_final, x = 2021.3, size = 4) +
