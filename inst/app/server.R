@@ -327,8 +327,8 @@ shinyServer(function(input, output, session) {
             geom_text(data = violencia_tags_final, x = 2021.5, size = 5) +
             scale_y_reverse(breaks = 1:5) +
             scale_x_continuous(
-                breaks = seq(min(ranking_tipo_violencia_republica$anyo), max(ranking_tipo_violencia_republica$anyo)),
-                limits = c(min(ranking_tipo_violencia_republica$anyo) - 2.3, max(ranking_tipo_violencia_republica$anyo) + 2)
+                breaks = seq(min(violencia_familiar_todo$anyo), max(violencia_familiar_todo$anyo)),
+                limits = c(min(violencia_familiar_todo$anyo) - 2.3, max(violencia_familiar_todo$anyo) + 2)
             ) +
             scale_color_manual(values = colores) +
             theme_ipsum() +
@@ -363,8 +363,8 @@ shinyServer(function(input, output, session) {
             geom_text(data = violencia_tags_final, x = 2021.3, size = 5) +
             scale_y_reverse(breaks = 1:5) +
             scale_x_continuous(
-                breaks = seq(min(ranking_tipo_violencia$anyo), max(ranking_tipo_violencia$anyo)),
-                limits = c(min(ranking_tipo_violencia$anyo) - 2.3, max(ranking_tipo_violencia$anyo) + 2)
+                breaks = seq(min(violencia_familiar$anyo), max(violencia_familiar$anyo)),
+                limits = c(min(violencia_familiar$anyo) - 2.3, max(violencia_familiar$anyo) + 2)
             ) +
             scale_color_manual(values = colores) +
             theme_ipsum() +
@@ -379,7 +379,7 @@ shinyServer(function(input, output, session) {
                 panel.grid.major.x = element_line(color = 'grey60', linetype = 'dashed')) +
             labs(
                 title = "Clasificación Violencia Familiar contra la Mujer",
-                subtitle = "Top 5 tipos de violencia en Querétaro",
+                subtitle = glue("Top 5 tipos de violencia en {input$estado_vfamiliar}"),
                 x = "Año",
                 y = "Rank"
             )

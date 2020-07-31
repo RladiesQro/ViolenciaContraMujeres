@@ -127,18 +127,6 @@ dashboardPage(
                 fluidRow(
                     box(
                         selectInput(
-                            inputId = "tipo_vfamiliar",
-                            label = NULL,
-                            choices = vector_tipo_violencia,
-                            multiple = F,
-                            selected = "Violencia familiar"
-                        ),
-                        title = "Tipo de Violencia contra la Mujer:",
-                        width = 6,
-                        collapsible = TRUE
-                    ),
-                    box(
-                        selectInput(
                             inputId = "estado_vfamiliar",
                             label = NULL,
                             choices = vector_estados,
@@ -146,7 +134,7 @@ dashboardPage(
                             selected = "Querétaro"
                         ),
                         title = "Estado seleccionado:",
-                        width = 6,
+                        width = 12,
                         collapsible = TRUE
                     )
                 ),
