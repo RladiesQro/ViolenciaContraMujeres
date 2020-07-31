@@ -13,8 +13,6 @@ library(purrr)
 library(ViolenciaContraMujeres)
 
 
-violencia_anual <- TasaPromedioMensual(datos_violencia, poblacion_inegi_2015)
-violencia_familiar_anual <- TasaPromedioMensual(datos_violencia, poblacion_inegi_2015, "Violencia familiar")
 violencia_meses_con_datos <- ComparaMesesConDatos(datos_violencia, poblacion_inegi_2015, "Violencia familiar")
 vector_estados <- datos_violencia %>%
   select(Entidad) %>%

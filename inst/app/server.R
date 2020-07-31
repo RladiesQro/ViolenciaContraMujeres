@@ -69,8 +69,7 @@ shinyServer(function(input, output) {
     })
 
     output$violencia_estatal <- renderPlotly({
-        violencia_anual_estados <- violencia_anual %>%
-            filter(Entidad %in% input$estado) %>%
+        violencia_anual_estados <- TasaPromedioMensual(datos_violencia, poblacion_inegi_2015, entidad = input$estado) %>%
             mutate(labels = glue(
                 "Estado: {Entidad} <br>",
                 "Casos promedios al mes: {comma(casos_promedio_mes, accuracy = 1)}<br>",
@@ -94,8 +93,7 @@ shinyServer(function(input, output) {
     })
 
     output$violencia_estatal_familiar <- renderPlotly({
-        violencia_familiar_anual_estados <- violencia_familiar_anual %>%
-            filter(Entidad %in% input$estado) %>%
+        violencia_familiar_anual_estados <- TasaPromedioMensual(datos_violencia, poblacion_inegi_2015, entidad = input$estado, filtro.tipo = "Violencia familiar")%>%
             mutate(labels = glue(
                 "Estado: {Entidad} <br>",
                 "Casos promedios al mes: {comma(casos_promedio_mes, accuracy = 1)}<br>",
