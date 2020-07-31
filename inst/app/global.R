@@ -10,6 +10,7 @@ library(shinyWidgets)
 library(stringr)
 library(sf)
 library(purrr)
+library(hrbrthemes)
 library(ViolenciaContraMujeres)
 
 
@@ -19,3 +20,9 @@ vector_estados <- datos_violencia %>%
   distinct() %>%
   arrange(Entidad) %>%
   mutate(Entidad = as.character(Entidad))
+
+vector_tipo_violencia  <- datos_violencia %>%
+  select(Tipo) %>%
+  distinct() %>%
+  arrange(Tipo) %>%
+  pull()

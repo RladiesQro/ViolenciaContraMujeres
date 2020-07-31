@@ -213,7 +213,7 @@ DatosMesEstadoAgrupados <- function(datos_violencia, entidad = NULL, resaltar.ti
 #' @importFrom rlang .data
 #'
 #' @examples  RankingTipoViolencia(datos_violencia, entidad = "Querétaro", numero_posiciones = 5)
-RankingTipoViolencia <- function(datos_violencia, entidad = NULL, numero_posiciones = NULL) {
+RankingTipoViolencia <- function(datos_violencia, entidad = NULL, numero_posiciones = NULL, resaltar_tipo = "Violencia familiar") {
   if(!is.null(entidad)) {
     ranking_tipo_violencia <- datos_violencia %>%
       dplyr::filter(.data$Entidad == entidad)
@@ -229,6 +229,9 @@ RankingTipoViolencia <- function(datos_violencia, entidad = NULL, numero_posicio
     ranking_tipo_violencia <- ranking_tipo_violencia %>%
       dplyr::top_n(numero_posiciones)
   }
-  ranking_tipo_violencia %>%
+  ranking_tipo_violencia <- ranking_tipo_violencia %>%
     dplyr::mutate(rank = dplyr::row_number())
+  .rankingPlotExtraInfo(
+    ranking_tipo_violencia, ajuste_anyo =  0.25, resaltar_tipo
+  )
 }
