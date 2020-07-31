@@ -206,6 +206,7 @@ DatosMesEstadoAgrupados <- function(datos_violencia, entidad = NULL, resaltar.ti
 #' @param datos_violencia Datos de casos de violencia contra la mujer
 #' @param entidad Entidad para filtrar el dataset, en caso de no declararlo o ponerlo a nul se calcula a todo México
 #' @param numero_posiciones Posiciones que se muestran dentro del ranking, por año y tipo de violencia.
+#' @param resaltar_tipo Determina el tipo de violencia contra la mujer que se resaltará con un color en el plot
 #'
 #' @return Conjunto de datos con la columna, Tipo de caso, año, número de casos y psoición dentro del rank
 #' @export

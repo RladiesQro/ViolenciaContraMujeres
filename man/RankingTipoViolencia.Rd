@@ -4,7 +4,12 @@
 \alias{RankingTipoViolencia}
 \title{Calculate ranking de tipo de violencia contra la mujer}
 \usage{
-RankingTipoViolencia(datos_violencia, entidad = NULL, numero_posiciones = NULL)
+RankingTipoViolencia(
+  datos_violencia,
+  entidad = NULL,
+  numero_posiciones = NULL,
+  resaltar_tipo = "Violencia familiar"
+)
 }
 \arguments{
 \item{datos_violencia}{Datos de casos de violencia contra la mujer}
@@ -12,6 +17,8 @@ RankingTipoViolencia(datos_violencia, entidad = NULL, numero_posiciones = NULL)
 \item{entidad}{Entidad para filtrar el dataset, en caso de no declararlo o ponerlo a nul se calcula a todo México}
 
 \item{numero_posiciones}{Posiciones que se muestran dentro del ranking, por año y tipo de violencia.}
+
+\item{resaltar_tipo}{Determina el tipo de violencia contra la mujer que se resaltará con un color en el plot}
 }
 \value{
 Conjunto de datos con la columna, Tipo de caso, año, número de casos y psoición dentro del rank

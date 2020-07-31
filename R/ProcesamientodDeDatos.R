@@ -106,19 +106,19 @@ AgregaTasaPoblacional <- function(resumen_datos_estatal, poblacion_inegi_2015, c
 .rankingPlotExtraInfo <- function(ranking_violencia, ajuste_anyo =  0.25, resaltar_tipo = NULL) {
   ranking_violencia <- ranking_violencia %>%
     dplyr::mutate(Tipo = ifelse(
-      .data$Tipo == "Otros delitos del Fuero Común",
-      "Otros delitos \n del Fuero Común",
+      .data$Tipo == "Otros delitos del Fuero Com\\u00fan",
+      "Otros delitos \n del Fuero Com\\u00fan",
       as.character(.data$Tipo)
     ))
 
   violencia_tags_inicio <- ranking_violencia %>%
     dplyr::ungroup() %>%
-    dplyr::filter(anyo == min(.data$anyo)) %>%
+    dplyr::filter(.data$anyo == min(.data$anyo)) %>%
     dplyr::mutate(anyo = as.numeric(.data$anyo) - ajuste_anyo)
 
   violencia_tags_final <- ranking_violencia %>%
     dplyr::ungroup() %>%
-    dplyr::filter(anyo == max(.data$anyo)) %>%
+    dplyr::filter(.data$anyo == max(.data$anyo)) %>%
     dplyr::mutate(anyo = as.numeric(.data$anyo) + ajuste_anyo)
 
   color_resalta <- "#DE4212"
