@@ -57,6 +57,12 @@ Con ello se podra instalar todo el paquete con el comando:
 devtools::install_github("RladiesQro/ViolenciaContraMujeres")
 ```
 
+El paquete incluye una viñeta, si quieres tenerla disponible necesitarás agregar el argumento `build_vignettes = TRUE`
+
+```r
+devtools::install_github("RladiesQro/ViolenciaContraMujeres", build_vignettes = TRUE)
+```
+
 Despues de la descarga se carga el paquete
 
 ```r
