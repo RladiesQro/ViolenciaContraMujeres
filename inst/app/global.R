@@ -1,3 +1,4 @@
+library(dplyr)
 library(ggplot2)
 library(glue)
 library(leaflet)
